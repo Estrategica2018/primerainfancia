@@ -115,6 +115,7 @@
                     <th>Entidad</th>
                     <th>Cargo</th>
                     <th>Acción</th>
+                    <th>Roles</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -142,6 +143,7 @@
                     {data: 'entidad', className: 'text-center'},
                     {data: 'cargo', className: 'text-center'},
                     {data: 'accion', className: 'text-center'},
+                    {data: 'roles', className: ''},
                 ]
             });
             var save_posicion = function () {

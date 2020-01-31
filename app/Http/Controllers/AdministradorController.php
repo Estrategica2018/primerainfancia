@@ -45,6 +45,13 @@ class AdministradorController extends Controller
             ->addColumn('accion', function () {
                 return  '<button type="button" class="btn btn-warning btn-sm editar">Editar</button>';
             })
+            ->addColumn('roles', function ($usuario) {
+                $rol = "";
+                foreach ($usuario->roles as $role){
+                    $rol = $rol.''.$role->name.',';
+                }
+                return  $rol;
+            })
             ->rawColumns(['accion'])
             ->make(true);
 

@@ -108,23 +108,23 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul class="navbar-nav">
-                            @if(\Illuminate\Support\Facades\Auth::user()->hasRole('administrador_plataforma'))
+                            @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole(['administrador_plataforma']))
                                 <li class="nav-item {{ (request()->is('administrador')) ? 'active' : '' }}">
                                     <a class="nav-link" href="{{route('administrador')}}">Administrador</a>
                                 </li>
                             @endif
 
-                            @if(\Illuminate\Support\Facades\Auth::user()->hasRole('ministerio'))
+                            @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole(['administrador_plataforma','ministerio']))
                                 <li class="nav-item {{ (request()->is('home','/')) ? 'active' : '' }}">
                                     <a class="nav-link" href="{{route('home')}}">Preselección <span class="sr-only">(current)</span></a>
                                 </li>
                             @endif
-                            @if(\Illuminate\Support\Facades\Auth::user()->hasRole('comite_educativo'))
+                            @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole(['administrador_plataforma','comite_educativo']))
                                     <li class="nav-item {{ (request()->is('comite')) ? 'active' : '' }}">
                                     <a class="nav-link" href="{{route('comite')}}">Comite Educativo</a>
                                 </li>
                             @endif
-                            @if(\Illuminate\Support\Facades\Auth::user()->hasRole('usuario'))
+                            @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole(['administrador_plataforma','usuario']))
                                     <li class="nav-item {{ (request()->is('priorizacion')) ? 'active' : '' }}">
                                     <a class="nav-link" href="{{route('priorizacion')}}">Priorización</a>
                                 </li>
