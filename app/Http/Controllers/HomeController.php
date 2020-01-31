@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        if($request->user()->authorizeRoles(['ministerio'])){
+        if($request->user()->authorizeRoles(['ministerio']) || $request->user()->authorizeRoles(['administrador_plataforma'])){
             //return redirect()->route('home');
             return view('home');
         }
