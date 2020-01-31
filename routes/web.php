@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/comite', 'ComiteController@index')->name('comite');
 Route::get('/priorizacion', 'PriorizacionController@index')->name('priorizacion');
 Route::get('/priorizacion_resultado', 'PriorizacionController@priorizacion_resultado')->name('priorizacion_resultado');
+Route::get('/administrador', 'AdministradorController@index')->name('administrador');
 
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -38,3 +39,9 @@ Route::post('registrar_calificacion_priorizacion', 'PriorizacionController@regis
 
 Route::get('resultado_libros_logistica_priorizacion_dt', 'PriorizacionController@resultado_libros_logistica_priorizacion_dt')->name('resultado_libros_logistica_priorizacion_dt');
 Route::get('libros_preseleccion_usuarios_dt/{usuario?}', 'ComiteController@libros_preseleccion_usuarios_dt')->name('libros_preseleccion_usuarios_dt');
+
+Route::get('usuarios_dt', 'AdministradorController@usuarios_dt')->name('usuarios_dt');
+
+Route::post('registrar_usuarios', 'AdministradorController@registrar_usuarios')->name('registrar_usuarios');
+
+

@@ -26,12 +26,16 @@
     <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
 
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
 
     <!-- Styles
 
      -->
     <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -104,6 +108,12 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul class="navbar-nav">
+                            @if(\Illuminate\Support\Facades\Auth::user()->hasRole('administrador_plataforma'))
+                                <li class="nav-item {{ (request()->is('administrador')) ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{route('administrador')}}">Administrador</a>
+                                </li>
+                            @endif
+
                             @if(\Illuminate\Support\Facades\Auth::user()->hasRole('ministerio'))
                                 <li class="nav-item {{ (request()->is('home','/')) ? 'active' : '' }}">
                                     <a class="nav-link" href="{{route('home')}}">Preselección <span class="sr-only">(current)</span></a>
@@ -119,9 +129,9 @@
                                     <a class="nav-link" href="{{route('priorizacion')}}">Priorización</a>
                                 </li>
                             @endif
-                                <li class="nav-item {{ (request()->is('priorizacion_resultado')) ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{route('priorizacion_resultado')}}">Priorización resultado</a>
-                                </li>
+                            <li class="nav-item {{ (request()->is('priorizacion_resultado')) ? 'active' : '' }}">
+                                <a class="nav-link" href="{{route('priorizacion_resultado')}}">Priorización resultado</a>
+                            </li>
                         </ul>
                     </div>
                 </nav>
