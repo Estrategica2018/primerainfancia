@@ -17,7 +17,7 @@ class ComiteController extends Controller
     //
 
     public function index(Request $request){
-        if($request->user()->authorizeRoles(['comite_educativo'])){
+        if($request->user()->authorizeRoles(['comite_educativo','administrador_plataforma'])){
             $usuarios = User::Has('libros_preseleccion')->get();
             $generos = Generos::all();
             $edadeslecturas = EdadLectura::all();

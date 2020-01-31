@@ -15,7 +15,7 @@ class PriorizacionController extends Controller
 {
     //
     public function index(Request $request) {
-        if($request->user()->authorizeRoles(['usuario'])){
+        if($request->user()->authorizeRoles(['usuario','administrador_plataforma'])){
 
             $generos = Generos::all();
             $edadeslecturas = EdadLectura::all();
@@ -43,7 +43,7 @@ class PriorizacionController extends Controller
 
 
     public function consultar_cupos_priorizacion (Request $request, $tipo){
-        if($request->user()->authorizeRoles(['usuario'])){
+        if($request->user()->authorizeRoles(['usuario','administrador_plataforma'])){
             if($tipo == 1){
                 return response()->json(
                     EdadLecturaPrioriza::all(),
@@ -55,11 +55,7 @@ class PriorizacionController extends Controller
     }
 
     public function registrar_calificacion_priorizacion (Request $request){
-        /*
-
-        );
-        */
-        if($request->user()->authorizeRoles(['usuario'])){
+        if($request->user()->authorizeRoles(['usuario','administrador_plataforma'])){
 
             $objetolibros = json_decode($request->get('objetolibros'),true);
             foreach ($objetolibros as $objetolibro){
