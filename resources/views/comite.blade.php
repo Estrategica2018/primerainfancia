@@ -126,6 +126,7 @@
 
                 </div>
             </div>
+            @if(auth()->user()->hasAnyRole(['admin_comite','administrador_plataforma']))
             <div class="row my-3">
                 <div class="col-md-12">
                     <table id="example3" class="table table-striped table-bordered dt-responsive nowrap"
@@ -164,6 +165,7 @@
                 </div>
 
             </div>
+            @endif
 
             <hr>
             <button class="btn btn-success" id="registrar">Enviar lista a logística de priorización</button>
