@@ -39,7 +39,6 @@ class ComiteController extends Controller
                     $disabled = "disabled";
                     $hiddenGenero = "";
                     $hiddenEdad = "hidden";
-                   // dd(GeneroPrioriza::select('cupo')->where('genero_id',1)->first()->cupo);
                 }
             }
 

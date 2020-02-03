@@ -66,7 +66,7 @@
                 </form>
                 @endif
                 <form id="rango_generos"  class="was-validated" {{$hiddenGenero}}>
-                    <h3>Generos</h3>
+                    <h3>Géneros</h3>
                     <div class="form-row">
                         @foreach($generos as $genero)
                             <div class="col-md-3 mb-3">

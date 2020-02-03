@@ -9,6 +9,7 @@ use App\Generos;
 use App\Libros;
 use App\LibrosPreseleccion;
 use App\LibrosPriorizacion;
+use App\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -33,22 +34,31 @@ class HomeController extends Controller
     {
 
         if($request->user()->authorizeRoles(['ministerio']) || $request->user()->authorizeRoles(['administrador_plataforma'])){
-            //return redirect()->route('home');
             return view('home');
         }
         if($request->user()->authorizeRoles(['comite_educativo'])){
+
+            $usuarios = User::Has('libros_preseleccion')->get();
             $generos = Generos::all();
             $edadeslecturas = EdadLectura::all();
             $registroPriorizacion = false;
             $tipoPriorizacion = "";
             $disabled = "";
-            $hiddenEdad = "hidden";
+            $hiddenEdad = "";
             $hiddenGenero = "hidden";
             if(count(EdadLecturaPrioriza::all())){
                 $registroPriorizacion = true;
                 $tipoPriorizacion = "rango_edad";
                 $disabled = "disabled";
                 $hiddenEdad = "";
+            }else{
+                if(count(GeneroPrioriza::all())){
+                    $registroPriorizacion = true;
+                    $tipoPriorizacion = "rango_genero";
+                    $disabled = "disabled";
+                    $hiddenGenero = "";
+                    $hiddenEdad = "hidden";
+                }
             }
 
             return view('comite')
@@ -58,7 +68,8 @@ class HomeController extends Controller
                 ->with('tipoPriorizacion',$tipoPriorizacion)
                 ->with('hiddenEdad',$hiddenEdad)
                 ->with('hiddenGenero',$hiddenGenero)
-                ->with('disabled',$disabled);
+                ->with('disabled',$disabled)
+                ->with('usuarios',$usuarios);
         }
         if($request->user()->authorizeRoles(['usuario'])){
 
@@ -74,6 +85,13 @@ class HomeController extends Controller
                 $tipoPriorizacion = "rango_edad";
                 $disabled = "disabled";
                 $hiddenEdad = "";
+            }else{
+                if(count(GeneroPrioriza::all())){
+                    $registroPriorizacion = true;
+                    $tipoPriorizacion = "genero";
+                    $disabled = "disabled";
+                    $hiddenGenero = "";
+                }
             }
             return view('priorizacion')
                 ->with('generos',$generos)

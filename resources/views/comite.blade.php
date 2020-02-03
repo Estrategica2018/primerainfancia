@@ -98,7 +98,7 @@
                         </form>
                     @endif
                     <form action="javascript:void(0);" class="was-validated" id="rango_generos" {{$hiddenGenero}}>
-                        <h3>Generos</h3>
+                        <h3>Géneros</h3>
                         <div class="form-row">
                             @foreach($generos as $genero)
                                 <div class="col-md-3 mb-3">

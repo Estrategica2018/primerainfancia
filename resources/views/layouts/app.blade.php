@@ -64,7 +64,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container" style="display: contents;">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="https://www.estrategicacomunicaciones.com/wp-content/uploads/2016/01/logo-estrategica-grand.png" alt="Estrategica Comunicaciones" data-retina="https://www.estrategicacomunicaciones.com/wp-content/uploads/2016/01/logo-estrategica-grand.png" data-retina_w="759" data-retina_h="239" style="height: 60px;">
+                    <img src="https://www.estrategicacomunicaciones.com/wp-content/uploads/2016/01/logo-estrategica-grand.png" alt="Estratégica Comunicaciones" data-retina="https://www.estrategicacomunicaciones.com/wp-content/uploads/2016/01/logo-estrategica-grand.png" data-retina_w="759" data-retina_h="239" style="height: 60px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -158,7 +158,7 @@
 <br>
 <footer class="bd-footer text-muted bg-primary text-white-50 container-fluid" style="max-width: 98%;">
     <div class="p-3 p-md-3 text-center">
-        <small style="color: white">Copyright &copy; Estrategica Comunicaciones <a href="https://www.estrategicacomunicaciones.com" style="color: white">https://www.estrategicacomunicaciones.com</a> </small>
+        <small style="color: white">Copyright &copy; Estratégica Comunicaciones <a href="https://www.estrategicacomunicaciones.com" style="color: white">https://www.estrategicacomunicaciones.com</a> </small>
     </div>
 </footer>
 </body>
