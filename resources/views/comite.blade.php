@@ -121,6 +121,7 @@
                             <span class="sr-only">unread messages</span>
                         </button>
                     </form>
+                    @endif
                 </div>
             </div>
             <div class="row my-3">
@@ -161,7 +162,7 @@
                 </div>
 
             </div>
-            @endif
+
             <hr>
             <button class="btn btn-success" id="registrar">Enviar lista a logística de priorización</button>
             <br><br>
