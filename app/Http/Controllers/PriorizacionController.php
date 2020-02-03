@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CalificacionLibrosPriorizacion;
 use App\EdadLectura;
 use App\EdadLecturaPrioriza;
+use App\GeneroPrioriza;
 use App\Generos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,13 @@ class PriorizacionController extends Controller
                 $tipoPriorizacion = "rango_edad";
                 $disabled = "disabled";
                 $hiddenEdad = "";
+            }else{
+                if(count(GeneroPrioriza::all())){
+                    $registroPriorizacion = true;
+                    $tipoPriorizacion = "genero";
+                    $disabled = "disabled";
+                    $hiddenGenero = "";
+                }
             }
             return view('priorizacion')
                 ->with('generos',$generos)
@@ -49,6 +57,14 @@ class PriorizacionController extends Controller
                     EdadLecturaPrioriza::all(),
                     200
                 );
+            }
+            else{
+                if($tipo == 2){
+                    return response()->json(
+                        GeneroPrioriza::all(),
+                        200
+                    );
+                }
             }
         }
 
@@ -78,23 +94,38 @@ class PriorizacionController extends Controller
 
     public function  priorizacion_resultado (Request $request) {
 
-        $resultado = DB::table('calificacion_libros_priorizacions as o')
-            ->join('libros as od', 'od.id', '=', 'o.libro_id')
-            ->join('generos as g', 'g.id', '=', 'od.genero')
-            ->join('edad_lecturas as e', 'e.id', '=', 'od.nivel_lectura')
-            ->selectRaw('*,e.nombre as nom_edad,g.nombre as nom_genero, sum(o.priorizacion) as sum')
-            ->groupBy('o.libro_id')
-            ->orderBy('sum', 'desc')
-            ->get();
 
-        $categorias = EdadLecturaPrioriza::all();
+            $resultado = DB::table('calificacion_libros_priorizacions as o')
+                ->join('libros as od', 'od.id', '=', 'o.libro_id')
+                ->join('generos as g', 'g.id', '=', 'od.genero')
+                ->join('edad_lecturas as e', 'e.id', '=', 'od.nivel_lectura')
+                ->selectRaw('*,e.nombre as nom_edad,g.nombre as nom_genero, sum(o.priorizacion) as sum')
+                ->groupBy('o.libro_id')
+                ->orderBy('sum', 'desc')
+                ->get();
+
         $objeto = array();
-        foreach ($categorias as $categoria){
-            foreach ($resultado->where('nivel_lectura',$categoria->edad_lectura_id)->take($categoria->cupo)->all() as $item){
-                array_push($objeto,$item);
-            }
 
+        if (count(EdadLecturaPrioriza::all())){
+            $categorias = EdadLecturaPrioriza::all();
+            foreach ($categorias as $categoria){
+                foreach ($resultado->where('nivel_lectura',$categoria->edad_lectura_id)->take($categoria->cupo)->all() as $item){
+                    array_push($objeto,$item);
+                }
+
+            }
+        }else{
+            if (count(GeneroPrioriza::all())){
+                $categorias = GeneroPrioriza::all();
+                foreach ($categorias as $categoria){
+                    foreach ($resultado->where('genero',$categoria->genero_id)->take($categoria->cupo)->all() as $item){
+                        array_push($objeto,$item);
+                    }
+
+                }
+            }
         }
+
         $objeto = collect($objeto);
         $unique = $objeto->unique()->sortBy('sum',  SORT_REGULAR,  true);
         return view('priorizacion_resultado')

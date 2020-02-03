@@ -38,6 +38,7 @@
     <div class=" container-fluid">
         <div class="card border-success mb-3">
             <div class="card-body text-success">
+                @if($hiddenGenero == "hidden")
                 <form action="javascript:void(0);" class="was-validated" id="rango_edades" {{$hiddenEdad}}>
                     <h5>Cupos para rango de edades</h5>
                     <div class="form-row">
@@ -62,28 +63,32 @@
                             </div>
                         @endforeach
                     </div>
-
                 </form>
-                <form id="rango_generos" {{$hiddenGenero}}>
+                @endif
+                <form id="rango_generos"  class="was-validated" {{$hiddenGenero}}>
                     <h3>Generos</h3>
                     <div class="form-row">
                         @foreach($generos as $genero)
                             <div class="col-md-3 mb-3">
                                 <label>{{$genero->nombre}}</label>
-                                <input type="number" class="form-control is-invalid" id="genero{{$genero->id}}"  required></input>
-                                <div class="valid-feedback">
-                                    Correcto
-                                </div>
+                                @if($registroPriorizacion)
+                                    <input disabled type="number" class="form-control is-valid" id="edad{{$genero->id}}"  required value={{\App\GeneroPrioriza::select('cupo')->where('genero_id',$genero->id)->first()->cupo}}></input>
+                                @else
+                                    <input type="number" class="form-control is-invalid" id="edad{{$edadlectura->id}}"  required></input>
+                                @endif
                             </div>
                         @endforeach
-
                     </div>
-                    <button class="btn btn-primary" type="" id="registrarGenero">Registrar</button>
-                    <button type="button" class="btn btn-warning">
-                        Libros para colección <span class="badge badge-light"
-                                                    id="numeropreseleccion">0</span>
-                        <span class="sr-only">unread messages</span>
-                    </button>
+                    <hr>
+                    <h5>Prioriozación realizada</h5>
+                    <div class="form-row">
+                        @foreach($generos as $genero)
+                            <div class="col-md-3 mb-3">
+                                <label>{{$genero->nombre}}</label>
+                                <input type="number" class="form-control is-invalid" id="edadCompletarG{{$genero->id}}"  required value="0"></input>
+                            </div>
+                        @endforeach
+                    </div>
                 </form>
             </div>
         </div>
@@ -143,6 +148,28 @@
                         console.log(objectCuposPriorizacion,'jbj');
                     }
                 });
+            }else{
+                if("{{$hiddenEdad}}" == "hidden"){
+                    evaluarCupos=2;
+                    let route =  "{{route('consultar_cupos_priorizacion',2)}}"
+                    $.ajax({
+                        contentType: "application/json; chartset=utf-8",
+                        dataType: "json",
+                        type: "GET",
+                        url: route,
+                        success: function (data) {
+                            $(data).each(function (key, value) {
+                                objectCuposPriorizacion.push({
+                                    id :value.id,
+                                    genero_id : value.genero_id,
+                                    cupo : value.cupo,
+                                    priorizado:0
+                                })
+                            });
+                            console.log(objectCuposPriorizacion,'jbj');
+                        }
+                    });
+                }
             }
             var tablePreseleccionComiteLibros = $('#example2').DataTable({
                 'ajax': "{{ route('libros_priorizacion_dt')}}",
@@ -197,6 +224,28 @@
                                 objectCuposPriorizacion[i].cupo--
                                 objectCuposPriorizacion[i].priorizado++
                                 $(`#edadCompletar${o.edad_lectura_id}`).val(objectCuposPriorizacion[i].priorizado);
+                                return true;
+                            }
+                        });
+                        const index = objectLibrosPriorizacion.findIndex(objectLibrosPriorizacion => objectLibrosPriorizacion.id === dataTable.id);
+                        if( index === -1){
+                            objectLibrosPriorizacion.push({
+                                id:dataTable.id,
+                                libro_id:dataTable.libro_id,
+                                priorizacion:priorizacion
+                            })
+                        }else{
+                            objectLibrosPriorizacion[index].priorizacion = priorizacion
+
+                        }
+                        console.log(objectCuposPriorizacion,index,objectLibrosPriorizacion);
+                    }
+                    else{
+                        objectCuposPriorizacion.find((o, i) => {
+                            if (parseInt(o.genero_id) ===  parseInt(dataTable.genero_id)) {
+                                objectCuposPriorizacion[i].cupo--
+                                objectCuposPriorizacion[i].priorizado++
+                                $(`#edadCompletarG${o.genero_id}`).val(objectCuposPriorizacion[i].priorizado);
                                 return true;
                             }
                         });

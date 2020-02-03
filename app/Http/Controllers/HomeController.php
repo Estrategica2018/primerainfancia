@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EdadLectura;
 use App\EdadLecturaPrioriza;
+use App\GeneroPrioriza;
 use App\Generos;
 use App\Libros;
 use App\LibrosPreseleccion;
@@ -168,5 +169,22 @@ class HomeController extends Controller
             200
         );
 
+    }
+
+    public function registrar_cupos_genero_priorizacion (Request $request) {
+
+        $objectCupos = json_decode($request->get('objectCupos'),true);
+
+        foreach ($objectCupos as $objectCupo){
+            $edadLectura = new GeneroPrioriza();
+            $edadLectura->genero_id = $objectCupo['id'];
+            $edadLectura->cupo = $objectCupo['cupo'];
+            $edadLectura->save();
+        }
+
+        return response()->json(
+            'cupos asignados exitosamente!',
+            200
+        );
     }
 }

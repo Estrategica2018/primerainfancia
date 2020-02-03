@@ -44,4 +44,5 @@ Route::get('usuarios_dt', 'AdministradorController@usuarios_dt')->name('usuarios
 
 Route::post('registrar_usuarios', 'AdministradorController@registrar_usuarios')->name('registrar_usuarios');
 
+Route::post('registrar_cupos_genero_priorizacion', 'HomeController@registrar_cupos_genero_priorizacion')->name('registrar_cupos_genero_priorizacion');
 

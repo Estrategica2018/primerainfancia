@@ -49,65 +49,75 @@
                             <div class="custom-control custom-radio">
                                 @if($tipoPriorizacion === "rango_edad")
                                     <input {{$disabled}} checked type="radio" class="custom-control-input check1" id="customControlValidation2" name="radio-stacked" required>
-                                    @else
+                                @else
                                     <input {{$disabled}} checked type="radio" class="custom-control-input check1" id="customControlValidation2" name="radio-stacked" required>
                                 @endif
-
                                 <label class="custom-control-label" for="customControlValidation2">Rango edades</label>
                             </div>
                             <div class="custom-control custom-radio mb-3">
-                                <input {{$disabled}} type="radio" class="custom-control-input check2" id="customControlValidation3" name="radio-stacked" required>
+                                @if($tipoPriorizacion === "rango_genero")
+                                    <input {{$disabled}} checked type="radio" class="custom-control-input check1" id="customControlValidation2" name="radio-stacked" required>
+                                @else
+                                    <input {{$disabled}} type="radio" class="custom-control-input check2" id="customControlValidation3" name="radio-stacked" required>
+                                @endif
+
                                 <label class="custom-control-label" for="customControlValidation3">Género</label>
                                 <div class="invalid-feedback">Seleccione el tipo de filtro</div>
                             </div>
                         </form>
                     </div>
                 <div class="col-md-10">
-                    <form action="javascript:void(0);" class="was-validated" id="rango_edades">
-                        <h3>Rango de edades</h3>
-                        <div class="form-row">
-                        @foreach($edadeslecturas as $edadlectura)
-                            <div class="col-md-3 mb-3">
-                                <label>{{$edadlectura->nombre}}</label>
-                                @if($registroPriorizacion)
-                                    <input disabled type="number" class="form-control is-valid" id="edad{{$edadlectura->id}}"  required value={{\App\EdadLecturaPrioriza::select('cupo')->where('edad_lectura_id',$edadlectura->id)->first()->cupo}}></input>
-                                @else
-                                    <input type="number" class="form-control is-invalid" id="edad{{$edadlectura->id}}"  required></input>
-                                @endif
-                                <div class="valid-feedback">
-                                    Correcto
-                                </div>
+                    @if($hiddenGenero == "hidden")
+                        <form action="javascript:void(0);" class="was-validated" id="rango_edades" {{$hiddenEdad}}>
+                            <h3>Rango de edades</h3>
+                            <div class="form-row">
+                                @foreach($edadeslecturas as $edadlectura)
+                                    <div class="col-md-3 mb-3">
+                                        <label>{{$edadlectura->nombre}}</label>
+                                        @if($registroPriorizacion)
+                                            <input disabled type="number" class="form-control is-valid" id="edad{{$edadlectura->id}}"  required value={{\App\EdadLecturaPrioriza::select('cupo')->where('edad_lectura_id',$edadlectura->id)->first()->cupo}}></input>
+                                        @else
+                                            <input type="number" class="form-control is-invalid" id="edad{{$edadlectura->id}}"  required></input>
+                                        @endif
+                                        <div class="valid-feedback">
+                                            Correcto
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
-                        </div>
-                        @if(!$registroPriorizacion)
-                            @if(auth()->user()->hasRole('admin_comite'))
-                                <button class="btn btn-primary" id="registrarEdad">Registrar</button>
+                            @if(!$registroPriorizacion)
+                                @if(auth()->user()->hasAnyRole(['admin_comite','administrador_plataforma']))
+                                    <button class="btn btn-primary" id="registrarEdad">Registrar</button>
+                                @endif
                             @endif
-                        @endif
-                        <button type="button" class="btn btn-warning">
-                            Libros para colección <span class="badge badge-light"
-                                                        id="numeropreseleccion">0</span>
-                            <span class="sr-only">unread messages</span>
-                        </button>
-
-                    </form>
-                    <form id="rango_generos" {{$hiddenGenero}}>
+                            <button type="button" class="btn btn-warning">
+                                Libros para colección <span class="badge badge-light"
+                                                            id="numeropreseleccion">0</span>
+                                <span class="sr-only">unread messages</span>
+                            </button>
+                        </form>
+                    @endif
+                    <form action="javascript:void(0);" class="was-validated" id="rango_generos" {{$hiddenGenero}}>
                         <h3>Generos</h3>
                         <div class="form-row">
                             @foreach($generos as $genero)
                                 <div class="col-md-3 mb-3">
                                     <label>{{$genero->nombre}}</label>
-                                    <input type="number" class="form-control is-invalid" id="genero{{$genero->id}}"  required></input>
+                                    @if($registroPriorizacion)
+                                        <input disabled type="number" class="form-control is-valid" id="genero{{$genero->id}}"  required value={{\App\GeneroPrioriza::select('cupo')->where('genero_id',$genero->id)->first()->cupo}}></input>
+                                    @else
+                                        <input type="number" class="form-control is-invalid" id="genero{{$genero->id}}"  required></input>
+                                    @endif
                                     <div class="valid-feedback">
                                         Correcto
                                     </div>
                                 </div>
                             @endforeach
-
                         </div>
-                        @if(auth()->user()->hasRole('admin_comite'))
-                            <button class="btn btn-primary" type="" id="registrarGenero">Registrar</button>
+                        @if(!$registroPriorizacion)
+                            @if(auth()->user()->hasAnyRole(['admin_comite','administrador_plataforma']))
+                                <button class="btn btn-primary" type="" id="registrarGenero">Registrar</button>
+                            @endif
                         @endif
                         <button type="button" class="btn btn-warning">
                             Libros para colección <span class="badge badge-light"
@@ -236,7 +246,6 @@
                 }
             })
             $('#registrarEdad').on('click',function(){
-
                 var objectCupos = [];
                 for(var i=1;i<=lengEdadLectura;i++){
                     objectCupos.push(
@@ -252,6 +261,55 @@
 
                 console.log(formDatas);
                 var route = '{{ route('registrar_cupos_edades_priorizacion') }}';
+                var typeAjax = 'POST';
+                var async = async || false;
+                $.ajax({
+                    url: route,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    cache: false,
+                    type: typeAjax,
+                    contentType: false,
+                    data: formDatas,
+                    processData: false,
+                    async: async,
+                    beforeSend: function () {
+
+                    },
+                    success: function (response, xhr, request) {
+                        console.log(response)
+                        swal({
+                            title: "Buen trabajo!",
+                            text: "Libros registrados!",
+                            icon: "success",
+                            button: "Ok",
+                        }).then((willDelete) => {
+                            if (willDelete) {
+                                location.reload();
+                            } else {
+                                location.reload();
+                            }
+                        })
+                    },
+                    error: function (response, xhr, request) {
+
+                    }
+                });
+            })
+
+            $('#registrarGenero').on('click',function(){
+                var objectCupos = [];
+                for(var i=1;i<=lengGeneros;i++){
+                    objectCupos.push(
+                        {
+                            id:i,
+                            cupo:$(`#genero${i}`).val()
+                        });
+                    console.log('ingresa',$(`#genero${i}`).val());
+
+                }
+                var formDatas = new FormData();
+                formDatas.append('objectCupos', JSON.stringify(objectCupos));
+                var route = '{{ route('registrar_cupos_genero_priorizacion') }}';
                 var typeAjax = 'POST';
                 var async = async || false;
                 $.ajax({

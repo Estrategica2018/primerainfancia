@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EdadLectura;
 use App\EdadLecturaPrioriza;
+use App\GeneroPrioriza;
 use App\Generos;
 use App\LibrosPreseleccion;
 use App\LibrosPriorizacion;
@@ -24,13 +25,22 @@ class ComiteController extends Controller
             $registroPriorizacion = false;
             $tipoPriorizacion = "";
             $disabled = "";
-            $hiddenEdad = "hidden";
+            $hiddenEdad = "";
             $hiddenGenero = "hidden";
             if(count(EdadLecturaPrioriza::all())){
                 $registroPriorizacion = true;
                 $tipoPriorizacion = "rango_edad";
                 $disabled = "disabled";
                 $hiddenEdad = "";
+            }else{
+                if(count(GeneroPrioriza::all())){
+                    $registroPriorizacion = true;
+                    $tipoPriorizacion = "rango_genero";
+                    $disabled = "disabled";
+                    $hiddenGenero = "";
+                    $hiddenEdad = "hidden";
+                   // dd(GeneroPrioriza::select('cupo')->where('genero_id',1)->first()->cupo);
+                }
             }
 
             return view('comite')
