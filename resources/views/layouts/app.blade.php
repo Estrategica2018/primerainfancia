@@ -157,7 +157,7 @@
 
 <br>
 <footer class="bd-footer text-muted bg-primary text-white-50 container-fluid" style="max-width: 98%;">
-    <div class="container-fluid p-3 p-md-5 text-center">
+    <div class="p-3 p-md-3 text-center">
         <small style="color: white">Copyright &copy; Estrategica Comunicaciones <a href="https://www.estrategicacomunicaciones.com" style="color: white">https://www.estrategicacomunicaciones.com</a> </small>
     </div>
 </footer>
