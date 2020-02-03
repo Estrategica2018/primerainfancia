@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\CalificacionLibrosPriorizacion;
+use App\EdadLecturaPrioriza;
+use App\GeneroPrioriza;
+use App\LibrosPreseleccion;
+use App\LibrosPriorizacion;
 use App\Role;
 use App\RoleUser;
 use App\User;
@@ -79,6 +84,16 @@ class AdministradorController extends Controller
             'usuario creado!',
             200
         );
+
+    }
+
+    public function reiniciar_tablas (){
+
+        CalificacionLibrosPriorizacion::getQuery()->delete();
+        EdadLecturaPrioriza::getQuery()->delete();
+        GeneroPrioriza::getQuery()->delete();
+        LibrosPriorizacion::getQuery()->delete();
+        LibrosPreseleccion::getQuery()->delete();
 
     }
 }

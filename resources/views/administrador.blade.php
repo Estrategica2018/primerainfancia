@@ -183,6 +183,8 @@
     <div class="container-fluid">
         <div class="col-md-12">
             <button class="btn btn-success" id="crearUsuario">Crear usuario</button>
+            <div class="float-right"><button class="btn btn-danger" id="reiniciar">Reiniciar tablas</button></div>
+            <hr>
             <br><br>
             <table id="example3" class="table table-striped table-bordered dt-responsive nowrap"
                    style="width:100%">
@@ -260,7 +262,6 @@
 
             }
             FormValidationMd.init(form_report_posicion, rules_form_report_posicion, messages_report_posicion, save_posicion());
-
             $("#btnSubmit").click(function(event) {
                 // Fetch form to apply custom Bootstrap validation
                 var form = $("#formCrearPosicion")
@@ -327,7 +328,6 @@
                 $('#exampleModalCenter2').modal('show')
 
             })
-
             tableUsuarios.on('click', '.editar', function (e) {
                 $tr = $(this).closest('tr');
                 let dataTable = tableUsuarios.row($tr).data();
@@ -339,6 +339,66 @@
                 $('#cargoEditar').val(dataTable.cargo)
                 $('#editarModal').modal('show')
             });
+            $('#reiniciar').on('click',function(){
+                swal({
+                    title: "Reiniciar tablas",
+                    text: "EL proceso actual para la priorización sera eliminado",
+                    icon: "warning",
+                    buttons: {
+                        cancel: "Cancelar",
+                        catch: {
+                            text: "Aceptar",
+                            value: 1,
+                        },
+
+                    },
+                })
+                    .then((value) => {
+                        switch (value) {
+                            case 1:
+                                var formDatas = new FormData();
+                                formDatas.append('objectCupos', 1);
+                                var route = '{{ route('reiniciar_tablas') }}';
+                                var typeAjax = 'POST';
+                                var async = async || false;
+                                $.ajax({
+                                    url: route,
+                                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                    cache: false,
+                                    type: typeAjax,
+                                    contentType: false,
+                                    data: formDatas,
+                                    processData: false,
+                                    async: async,
+                                    beforeSend: function () {
+
+                                    },
+                                    success: function (response, xhr, request) {
+                                        console.log(response)
+                                        swal({
+                                            title: "Buen trabajo!",
+                                            text: "Libros registrados!",
+                                            icon: "success",
+                                            button: "Ok",
+                                        }).then((willDelete) => {
+                                            if (willDelete) {
+                                                location.reload();
+                                            } else {
+                                                location.reload();
+                                            }
+                                        })
+                                    },
+                                    error: function (response, xhr, request) {
+
+                                    }
+                                });
+                                break;
+                            default:
+                                swal("", "Acción Cancelada!", "info");
+                        }
+                    });
+            })
+
         } );
     </script>
 @endsection
