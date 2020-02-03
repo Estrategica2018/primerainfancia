@@ -38,7 +38,7 @@
     <div class=" container-fluid">
         <div class="card border-success mb-3">
             <div class="card-body text-success">
-                @if($hiddenGenero == "hidden")
+                @if($hiddenEdad != "hidden")
                 <form action="javascript:void(0);" class="was-validated" id="rango_edades" {{$hiddenEdad}}>
                     <h5>Cupos para rango de edades</h5>
                     <div class="form-row">
@@ -65,6 +65,7 @@
                     </div>
                 </form>
                 @endif
+                @if($hiddenGenero != "hidden")
                 <form id="rango_generos"  class="was-validated" {{$hiddenGenero}}>
                     <h3>Géneros</h3>
                     <div class="form-row">
@@ -90,6 +91,7 @@
                         @endforeach
                     </div>
                 </form>
+                @endif
             </div>
         </div>
         <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12" >
@@ -265,6 +267,7 @@
 
                 }
                 tablePreseleccionComiteLibros.row($row).data(dataTable).draw(false);
+                $('#exampleModalCenter').modal('hide')
             })
             $('#finalizar_registro').on('click',function(){
                 var route = '{{ route('registrar_calificacion_priorizacion') }}';
