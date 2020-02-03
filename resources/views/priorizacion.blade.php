@@ -213,7 +213,7 @@
                         dataTable.priorizacion = '<h5><span class="badge badge-warning">Alta</span></h5>'
                         break;
                     case '6':
-                        dataTable.priorizacion = '<h5><span class="badge badge-primary">Alta</span></h5>'
+                        dataTable.priorizacion = '<h5><span class="badge badge-primary">Media</span></h5>'
                         break;
                     case '4':
                         dataTable.priorizacion = '<h5><span class="badge badge-danger">Baja</span></h5>'
