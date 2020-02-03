@@ -92,7 +92,7 @@
                             @endif
                         </form>
                     @endif
-                    @if($hiddenGenero != "hidden")
+
                         <form action="javascript:void(0);" class="was-validated" id="rango_generos" {{$hiddenGenero}}>
                         <h3>Géneros</h3>
                         <div class="form-row">
@@ -100,7 +100,9 @@
                                 <div class="col-md-3 mb-3">
                                     <label>{{$genero->nombre}}</label>
                                     @if($registroPriorizacion)
-                                        <input  disabled type="number" class="form-control is-valid" id="genero{{$genero->id}}"  required value={{\App\GeneroPrioriza::select('cupo')->where('genero_id',$genero->id)->first()->cupo}}></input>
+                                        @if($hiddenGenero != "hidden")
+                                            <input  disabled type="number" class="form-control is-valid" id="genero{{$genero->id}}"  required value={{\App\GeneroPrioriza::select('cupo')->where('genero_id',$genero->id)->first()->cupo}}></input>
+                                        @endif
                                     @else
                                         <input onchange="sumar(this.value)" type="number" class="form-control is-invalid" id="genero{{$genero->id}}"  required></input>
                                     @endif
@@ -121,7 +123,7 @@
                             <span class="sr-only">unread messages</span>
                         </button>
                     </form>
-                    @endif
+
                 </div>
             </div>
             <div class="row my-3">
@@ -403,8 +405,9 @@
                             {data: 'editorial', className: 'text-center'},
                             {data: 'nivel_lectura', className: 'text-center'},
                             {data: 'genero', className: 'text-center'},
-                            {data: 'proveedor', className: 'text-center'},
                             {data: 'observacion', className: 'text-center'},
+                            {data: 'proveedor', className: 'text-center'},
+
                         ]
                     })
                 }

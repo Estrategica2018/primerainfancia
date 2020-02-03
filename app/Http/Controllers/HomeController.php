@@ -141,12 +141,13 @@ class HomeController extends Controller
         $objetolibros = json_decode($request->get('objetolibros'),true);
 
         foreach ($objetolibros as $objetolibro){
-            $preseleccion = new LibrosPreseleccion();
-            $preseleccion->libro_id = $objetolibro["id"];
-            $preseleccion->observacion = $objetolibro["observacion"];
-            $preseleccion->user_id = auth()->user()->id;
-            $preseleccion->save();
-
+            if(!count(LibrosPreseleccion::where('libro_id',$objetolibro["id"])->get()) ){
+                $preseleccion = new LibrosPreseleccion();
+                $preseleccion->libro_id = $objetolibro["id"];
+                $preseleccion->observacion = $objetolibro["observacion"];
+                $preseleccion->user_id = auth()->user()->id;
+                $preseleccion->save();
+            }
         }
         return response()->json(
             'preselección de libros exitosa!',
@@ -176,10 +177,12 @@ class HomeController extends Controller
         $objetolibros = json_decode($request->get('objetolibros'),true);
 
         foreach ($objetolibros as $objetolibro){
-            $preseleccion = new LibrosPriorizacion();
-            $preseleccion->libro_preseleccionado_id = $objetolibro["id"];
-            $preseleccion->libro_id = $objetolibro["libro_id"];
-            $preseleccion->save();
+            if(!count(LibrosPriorizacion::where('libro_id',$objetolibro["libro_id"])->get()) ) {
+                $preseleccion = new LibrosPriorizacion();
+                $preseleccion->libro_preseleccionado_id = $objetolibro["id"];
+                $preseleccion->libro_id = $objetolibro["libro_id"];
+                $preseleccion->save();
+            }
 
         }
         return response()->json(
