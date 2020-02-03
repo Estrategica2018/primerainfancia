@@ -57,6 +57,13 @@ class AdministradorController extends Controller
                 }
                 return  $rol;
             })
+            ->addColumn('roles_id', function ($usuario) {
+                $rol = "";
+                foreach ($usuario->roles as $role){
+                    $rol = $rol.''.$role->id.',';
+                }
+                return  $rol;
+            })
             ->rawColumns(['accion'])
             ->make(true);
 
@@ -95,5 +102,28 @@ class AdministradorController extends Controller
         LibrosPriorizacion::getQuery()->delete();
         LibrosPreseleccion::getQuery()->delete();
 
+    }
+
+    public function editar_usuario (Request $request){
+
+        $user = User::find($request->get('id'));
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->entidad = $request->get('entidad');
+        $user->cargo = $request->get('cargo');
+        $user->numero_identificacion = $request->get('numero_identificacion');
+        $user->save();
+        $roles = explode(",",$request->get('roles'));
+        RoleUser::where('user_id',$request->get('id'))->delete();
+        foreach ($roles as $role){
+            $roleUser = new RoleUser();
+            $roleUser->role_id = $role;
+            $roleUser->user_id = $user->id;
+            $roleUser->save();
+        }
+        return response()->json(
+            'usuario editado!',
+            200
+        );
     }
 }

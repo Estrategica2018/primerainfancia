@@ -111,7 +111,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="was-validated" id="formCrearPosicion" action="javascript:void(0);">
+                    <form class="was-validated" id="formCrearPosicion2" action="javascript:void(0);">
                         <div class="form-group">
                             <label for="inputAddress">Nombre</label>
                             <input type="text" class="form-control" id="nombreEditar" name="nombreEditar" placeholder="" required>
@@ -164,7 +164,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Roles</label>
-                            <select class="selectpicker" multiple data-selected-text-format="count > 3" data-width="100%" title="Seleccione una o mas opciónes" data-live-search="true" id="roles">
+                            <select class="selectpicker" multiple data-selected-text-format="count > 3" data-width="100%" title="Seleccione una o mas opciónes" data-live-search="true" id="rolesEditar">
                                 @foreach($roles as $role)
                                     <option value={{$role->id}}>{{$role->name}}</option>
                                 @endforeach
@@ -175,7 +175,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-warning" id="btnSubmit">Editar</button>
+                    <button type="submit" class="btn btn-warning" id="editarUsuario">Editar</button>
                 </div>
             </div>
         </div>
@@ -197,6 +197,7 @@
                     <th>Cargo</th>
                     <th>Acción</th>
                     <th>Roles</th>
+                    <th hidden>Roles_id</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -212,6 +213,7 @@
     <script>
         $(document).ready(function() {
             // To style only selects with the my-select class
+            var userIdEdit = null;
             $('.selectpicker').selectpicker();
             var tableUsuarios = $('#example3').DataTable({
                 processing: true,
@@ -225,6 +227,7 @@
                     {data: 'cargo', className: 'text-center'},
                     {data: 'accion', className: 'text-center'},
                     {data: 'roles', className: ''},
+                    {data: 'roles_id', "visible": false,},
                 ]
             });
             var save_posicion = function () {
@@ -265,7 +268,6 @@
             $("#btnSubmit").click(function(event) {
                 // Fetch form to apply custom Bootstrap validation
                 var form = $("#formCrearPosicion")
-
                 if (form[0].checkValidity() === false) {
                     event.preventDefault()
                     event.stopPropagation()
@@ -303,7 +305,7 @@
                             console.log(response)
                             swal({
                                 title: "Buen trabajo!",
-                                text: "Libros registrados!",
+                                text: "Usuario creado!",
                                 icon: "success",
                                 button: "Ok",
                             }).then((willDelete) => {
@@ -323,6 +325,7 @@
                 form.addClass('was-validated');
                 // Perform ajax submit here...
             });
+
             $('#crearUsuario').on('click',function(){
 
                 $('#exampleModalCenter2').modal('show')
@@ -332,11 +335,16 @@
                 $tr = $(this).closest('tr');
                 let dataTable = tableUsuarios.row($tr).data();
                 console.log(dataTable)
+                userIdEdit = dataTable.id
                 $('#nombreEditar').val(dataTable.name)
                 $('#cedulaEditar').val(dataTable.numero_identificacion)
                 $('#correoEditar').val(dataTable.email)
                 $('#entidadEditar').val(dataTable.entidad)
                 $('#cargoEditar').val(dataTable.cargo)
+                var newStr =(dataTable.roles_id).slice(0, -1);
+                newStr = newStr.split(',');
+                console.log(newStr)
+                $('#rolesEditar').selectpicker('val', newStr);
                 $('#editarModal').modal('show')
             });
             $('#reiniciar').on('click',function(){
@@ -377,7 +385,7 @@
                                         console.log(response)
                                         swal({
                                             title: "Buen trabajo!",
-                                            text: "Libros registrados!",
+                                            text: "Proceso eliminado!",
                                             icon: "success",
                                             button: "Ok",
                                         }).then((willDelete) => {
@@ -398,6 +406,68 @@
                         }
                     });
             })
+
+            $("#editarUsuario").click(function(event) {
+                // Fetch form to apply custom Bootstrap validation
+                var form = $("#formCrearPosicion2")
+                if (form[0].checkValidity() === false) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    console.log('faltan campos')
+                }else{
+                    console.log('campos validados')
+                    var formDatas = new FormData();
+                    formDatas.append('name',$('#nombreEditar').val() );
+                    formDatas.append('email',$('#correoEditar').val() );
+                    formDatas.append('cargo',$('#cargoEditar').val() );
+                    formDatas.append('entidad',$('#entidadEditar').val() );
+                    formDatas.append('numero_identificacion',$('#cedulaEditar').val() );
+                    formDatas.append('roles',$('#rolesEditar').val() );
+                    formDatas.append('id',userIdEdit);
+
+                    console.log(formDatas);
+                    var route = '{{ route('editar_usuario') }}';
+                    var typeAjax = 'POST';
+                    var async = async || false;
+                    $.ajax({
+                        url: route,
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        cache: false,
+                        type: typeAjax,
+                        contentType: false,
+                        data: formDatas,
+                        processData: false,
+                        async: async,
+                        beforeSend: function () {
+
+                        },
+                        success: function (response, xhr, request) {
+                            console.log(response)
+                            swal({
+                                title: "Buen trabajo!",
+                                text: "Usuario editado!",
+                                icon: "success",
+                                button: "Ok",
+                            }).then((willDelete) => {
+                                if (willDelete) {
+                                    tableUsuarios.ajax.reload()
+                                    userIdEdit=null
+                                } else {
+                                    tableUsuarios.ajax.reload()
+                                    userIdEdit=null
+                                }
+                            })
+                            $('#editarModal').modal('hide')
+                        },
+                        error: function (response, xhr, request) {
+
+                        }
+                    });
+                }
+
+                form.addClass('was-validated');
+                // Perform ajax submit here...
+            });
 
         } );
     </script>

@@ -48,3 +48,5 @@ Route::post('registrar_cupos_genero_priorizacion', 'HomeController@registrar_cup
 
 Route::post('reiniciar_tablas', 'AdministradorController@reiniciar_tablas')->name('reiniciar_tablas');
 
+Route::post('editar_usuario', 'AdministradorController@editar_usuario')->name('editar_usuario');
+
