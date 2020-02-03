@@ -4,13 +4,13 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Libros preseleccionados</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Crear usuario</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="" id="formCrearPosicion" action="javascript:void(0);">
+                    <form class="was-validated" id="formCrearPosicion" action="javascript:void(0);">
                         <div class="form-group">
                             <label for="inputAddress">Nombre</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" required>
@@ -97,6 +97,85 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary" id="btnSubmit">Registrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-xl" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Editar usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="was-validated" id="formCrearPosicion" action="javascript:void(0);">
+                        <div class="form-group">
+                            <label for="inputAddress">Nombre</label>
+                            <input type="text" class="form-control" id="nombreEditar" name="nombreEditar" placeholder="" required>
+                            <div class="valid-feedback">
+                                Completo
+                            </div>
+                            <div class="invalid-feedback">
+                                Campo requerido
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAddress2">Cedula</label>
+                            <input type="text" class="form-control" id="cedulaEditar" name="cedulaEditar" placeholder="" required>
+                            <div class="valid-feedback">
+                                Completo
+                            </div>
+                            <div class="invalid-feedback">
+                                Campo requerido
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail4">Correo</label>
+                            <input type="email" class="form-control" id="correoEditar" name="correoEditar" required>
+                            <div class="valid-feedback">
+                                Completo
+                            </div>
+                            <div class="invalid-feedback">
+                                Campo requerido
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail4">Entidad</label>
+                            <input type="text" class="form-control" id="entidadEditar" required>
+                            <div class="valid-feedback">
+                                Completo
+                            </div>
+                            <div class="invalid-feedback">
+                                Campo requerido
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail4">Cargo</label>
+                            <input type="text" class="form-control" id="cargoEditar" required>
+                            <div class="valid-feedback">
+                                Completo
+                            </div>
+                            <div class="invalid-feedback">
+                                Campo requerido
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Roles</label>
+                            <select class="selectpicker" multiple data-selected-text-format="count > 3" data-width="100%" title="Seleccione una o mas opciónes" data-live-search="true" id="roles">
+                                @foreach($roles as $role)
+                                    <option value={{$role->id}}>{{$role->name}}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-warning" id="btnSubmit">Editar</button>
                 </div>
             </div>
         </div>
@@ -248,6 +327,18 @@
                 $('#exampleModalCenter2').modal('show')
 
             })
+
+            tableUsuarios.on('click', '.editar', function (e) {
+                $tr = $(this).closest('tr');
+                let dataTable = tableUsuarios.row($tr).data();
+                console.log(dataTable)
+                $('#nombreEditar').val(dataTable.name)
+                $('#cedulaEditar').val(dataTable.numero_identificacion)
+                $('#correoEditar').val(dataTable.email)
+                $('#entidadEditar').val(dataTable.entidad)
+                $('#cargoEditar').val(dataTable.cargo)
+                $('#editarModal').modal('show')
+            });
         } );
     </script>
 @endsection
