@@ -4,6 +4,44 @@
 @section('content')
     <div class=" container-fluid">
         <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12" >
+            <div class="card border-success mb-3">
+                <div class="card-body text-success">
+                    @if($hiddenEdad != "hidden")
+                        <form action="javascript:void(0);" class="was-validated" id="rango_edades" {{$hiddenEdad}}>
+                            <h5>Cupos para rango de edades</h5>
+                            <div class="form-row">
+                                @foreach($edadeslecturas as $edadlectura)
+                                    <div class="col-md-3 mb-3">
+                                        <label>{{$edadlectura->nombre}}</label>
+                                        @if($registroPriorizacion)
+                                            <input disabled type="number" class="form-control is-valid" id="edad{{$edadlectura->id}}"  required value={{\App\EdadLecturaPrioriza::select('cupo')->where('edad_lectura_id',$edadlectura->id)->first()->cupo}}></input>
+                                        @else
+                                            <input type="number" class="form-control is-invalid" id="edad{{$edadlectura->id}}"  required></input>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        </form>
+                    @endif
+                    @if($hiddenGenero != "hidden")
+                        <form id="rango_generos"  class="was-validated" {{$hiddenGenero}}>
+                            <h3>Géneros</h3>
+                            <div class="form-row">
+                                @foreach($generos as $genero)
+                                    <div class="col-md-3 mb-3">
+                                        <label>{{$genero->nombre}}</label>
+                                        @if($registroPriorizacion)
+                                            <input disabled type="number" class="form-control is-valid" id="edad{{$genero->id}}"  required value={{\App\GeneroPrioriza::select('cupo')->where('genero_id',$genero->id)->first()->cupo}}></input>
+                                        @else
+                                            <input type="number" class="form-control is-invalid" id="edad{{$edadlectura->id}}"  required></input>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        </form>
+                    @endif
+                </div>
+            </div>
             <br>
             <h4>Colección de libros</h4>
             <br><br>

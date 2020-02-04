@@ -54,7 +54,7 @@
                         @endforeach
                     </div>
                     <hr>
-                    <h5>Prioriozación realizada</h5>
+                    <h5>Priorización realizada</h5>
                     <div class="form-row">
                         @foreach($edadeslecturas as $edadlectura)
                             <div class="col-md-3 mb-3">
@@ -81,7 +81,7 @@
                         @endforeach
                     </div>
                     <hr>
-                    <h5>Prioriozación realizada</h5>
+                    <h5>Priorización realizada</h5>
                     <div class="form-row">
                         @foreach($generos as $genero)
                             <div class="col-md-3 mb-3">

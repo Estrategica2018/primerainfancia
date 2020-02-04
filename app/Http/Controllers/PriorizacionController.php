@@ -95,14 +95,14 @@ class PriorizacionController extends Controller
     public function  priorizacion_resultado (Request $request) {
 
 
-            $resultado = DB::table('calificacion_libros_priorizacions as o')
-                ->join('libros as od', 'od.id', '=', 'o.libro_id')
-                ->join('generos as g', 'g.id', '=', 'od.genero')
-                ->join('edad_lecturas as e', 'e.id', '=', 'od.nivel_lectura')
-                ->selectRaw('*,e.nombre as nom_edad,g.nombre as nom_genero, sum(o.priorizacion) as sum')
-                ->groupBy('o.libro_id')
-                ->orderBy('sum', 'desc')
-                ->get();
+        $resultado = DB::table('calificacion_libros_priorizacions as o')
+            ->join('libros as od', 'od.id', '=', 'o.libro_id')
+            ->join('generos as g', 'g.id', '=', 'od.genero')
+            ->join('edad_lecturas as e', 'e.id', '=', 'od.nivel_lectura')
+            ->selectRaw('*,e.nombre as nom_edad,g.nombre as nom_genero, sum(o.priorizacion) as sum')
+            ->groupBy('o.libro_id')
+            ->orderBy('sum', 'desc')
+            ->get();
 
         $objeto = array();
 
@@ -125,11 +125,37 @@ class PriorizacionController extends Controller
                 }
             }
         }
+        $generos = Generos::all();
+        $edadeslecturas = EdadLectura::all();
+        $registroPriorizacion = false;
+        $tipoPriorizacion = "";
+        $disabled = "";
+        $hiddenEdad = "hidden";
+        $hiddenGenero = "hidden";
+        if(count(EdadLecturaPrioriza::all())){
+            $registroPriorizacion = true;
+            $tipoPriorizacion = "rango_edad";
+            $disabled = "disabled";
+            $hiddenEdad = "";
+        }else{
+            if(count(GeneroPrioriza::all())){
+                $registroPriorizacion = true;
+                $tipoPriorizacion = "genero";
+                $disabled = "disabled";
+                $hiddenGenero = "";
+            }
+        }
 
         $objeto = collect($objeto);
         $unique = $objeto->unique()->sortBy('sum',  SORT_REGULAR,  true);
         return view('priorizacion_resultado')
-            ->with('objeto',$unique);
+            ->with('objeto',$unique)->with('generos',$generos)
+            ->with('registroPriorizacion',$registroPriorizacion)
+            ->with('edadeslecturas',$edadeslecturas)
+            ->with('tipoPriorizacion',$tipoPriorizacion)
+            ->with('hiddenEdad',$hiddenEdad)
+            ->with('hiddenGenero',$hiddenGenero)
+            ->with('disabled',$disabled);
 
     }
 
