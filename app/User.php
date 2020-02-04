@@ -70,4 +70,9 @@ class User extends Authenticatable
         return $this->hasMany(LibrosPreseleccion::class,'user_id','id');
 
     }
+
+    public function usuario_libros_registrados_preseleccion (){
+
+        return $this->hasMany(HistorialRegistrosLibros::class,'user_id','id');
+    }
 }

@@ -63,7 +63,59 @@
             </div>
         </div>
     </div>
+    <!-- Modal table libros registrados -->
+    <div class="modal fade bd-example-modal-xl" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Libros registrados</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="example2" class="mt-3 table table-striped table-bordered dt-responsive nowrap"
+                               style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>ISBN</th>
+                                <th width="20%">Título</th>
+                                <th>Autor</th>
+                                <th>Editorial</th>
+                                <th>Nivel de lectura</th>
+                                <th>Género</th>
+                                <th>Observación</th>
+                                <th>Proveedor</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($libros as $libroU)
+                                <tr>
+                                    <td>{{$libroU->libros->isbn}}</td>
+                                    <td>{{$libroU->libros->titulo}}</td>
+                                    <td>{{$libroU->libros->autor}}</td>
+                                    <td>{{$libroU->libros->editorial}}</td>
+                                    <td>{{$libroU->libros->edadf->nombre}}</td>
+                                    <td>{{$libroU->libros->generof->nombre}}</td>
+                                    <td>{{$libroU->observacion}}</td>
+                                    <td>{{$libroU->libros->proveedor}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid">
+        <br>
         <div class="row">
             <div class="col-12">
                 <div class="tab-content" id="v-pills-tabContent">
@@ -73,13 +125,14 @@
                             <h3>Preselección</h3>
                         </div>
                         <hr>
-                        <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12">
-                            <button type="button" class="btn btn-primary mt-3" id="preseleccionados">
+                        <div class="border-top col-sm-12 col-md-12 col-lg-12">
+                            <button type="button" class="btn btn-primary mt-3 btn-sm" id="preseleccionados">
                                 Cantidad de libros preseleccionados <span class="badge badge-light"
                                                                           id="numeropreseleccion">0</span>
                                 <span class="sr-only">unread messages</span>
                             </button>
-                            <button type="button" class="btn btn-success mt-3" id="registrar"> Registrar libros</button>
+                            <button type="button" class="btn btn-success mt-3 btn-sm" id="registrar"> Registrar libros</button>
+                            <button type="button" class="btn btn-warning mt-3 btn-sm" id="ver"> Libros registrados</button>
                             <br>
                             <br>
                             <table id="example" class="mt-3 table table-striped table-bordered dt-responsive nowrap"
@@ -303,6 +356,9 @@
                 tableListaPreseleccionLibros = $('#example2').DataTable({
                 })
             });
+            $('#ver').on('click',function(){
+               $('#exampleModalCenter3').modal('show')
+            })
         });
     </script>
 @endsection

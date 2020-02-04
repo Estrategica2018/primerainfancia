@@ -7,6 +7,7 @@ use App\EdadLectura;
 use App\EdadLecturaPrioriza;
 use App\GeneroPrioriza;
 use App\Generos;
+use App\HistorialRegistrosLibros;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -38,6 +39,13 @@ class PriorizacionController extends Controller
                     $hiddenGenero = "";
                 }
             }
+            $libros = HistorialRegistrosLibros::where([
+                ['tipo_registro_id', '=', 3],
+                ['user_id', '=', auth()->user()->id]
+            ])->get();
+            if($libros===null){
+                $libros = [];
+            }
             return view('priorizacion')
                 ->with('generos',$generos)
                 ->with('registroPriorizacion',$registroPriorizacion)
@@ -45,7 +53,8 @@ class PriorizacionController extends Controller
                 ->with('tipoPriorizacion',$tipoPriorizacion)
                 ->with('hiddenEdad',$hiddenEdad)
                 ->with('hiddenGenero',$hiddenGenero)
-                ->with('disabled',$disabled);
+                ->with('disabled',$disabled)
+                ->with('libros',$libros);
         }
     }
 
@@ -76,12 +85,32 @@ class PriorizacionController extends Controller
             $objetolibros = json_decode($request->get('objetolibros'),true);
             foreach ($objetolibros as $objetolibro){
 
-                $calificacion = new CalificacionLibrosPriorizacion();
+
+                if(!count(HistorialRegistrosLibros::where([
+                ['libro_id',$objetolibro["libro_id"]],
+                ['user_id',auth()->user()->id],
+                ['tipo_registro_id',3]
+            ]   )->get()) ){
+                    $historial = new HistorialRegistrosLibros();
+                    $historial->libro_id = $objetolibro["libro_id"];
+                    $historial->user_id = auth()->user()->id;
+                    $historial->tipo_registro_id = 3;
+                    $historial->priorizacion = $objetolibro['priorizacion'];
+                    $historial->save();
+                }
+
+                if(!count(CalificacionLibrosPriorizacion::where([
+                    ['libro_id',$objetolibro["libro_id"]],
+                    ['usuario_id',auth()->user()->id],
+
+                ])->get()) ) {
+                    $calificacion = new CalificacionLibrosPriorizacion();
                     $calificacion->libro_priorizacion_id = $objetolibro['id'];
                     $calificacion->libro_id = $objetolibro['libro_id'];
                     $calificacion->priorizacion = $objetolibro['priorizacion'];
                     $calificacion->usuario_id = auth()->user()->id;
-                $calificacion->save();
+                    $calificacion->save();
+                }
 
             }
             return response()->json(

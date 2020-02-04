@@ -6,10 +6,12 @@ use App\EdadLectura;
 use App\EdadLecturaPrioriza;
 use App\GeneroPrioriza;
 use App\Generos;
+use App\HistorialRegistrosLibros;
 use App\Libros;
 use App\LibrosPreseleccion;
 use App\LibrosPriorizacion;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -34,7 +36,15 @@ class HomeController extends Controller
     {
 
         if($request->user()->authorizeRoles(['ministerio']) || $request->user()->authorizeRoles(['administrador_plataforma'])){
-            return view('home');
+            $libros = User::with('usuario_libros_registrados_preseleccion.libros')->whereHas('usuario_libros_registrados_preseleccion',function(Builder $query){
+                $query->where('tipo_registro_id', '=', 1);//preselección
+            })->first();
+            if($libros===null){
+                $libros = [];
+            }else{
+                $libros = $libros->usuario_libros_registrados_preseleccion;
+            }
+            return view('home')->with('libros',$libros);
         }
         if($request->user()->authorizeRoles(['comite_educativo'])){
 
@@ -140,7 +150,22 @@ class HomeController extends Controller
 
         $objetolibros = json_decode($request->get('objetolibros'),true);
 
+        //registrar_libros_para_comite
+
         foreach ($objetolibros as $objetolibro){
+            if(!count(HistorialRegistrosLibros::where([
+                ['libro_id',$objetolibro["id"]],
+                ['user_id',auth()->user()->id],
+                ['tipo_registro_id',1]
+
+            ])->get()) ){
+                $historial = new HistorialRegistrosLibros();
+                $historial->libro_id = $objetolibro["id"];
+                $historial->user_id = auth()->user()->id;
+                $historial->observacion = $objetolibro["observacion"];
+                $historial->tipo_registro_id = 1;
+                $historial->save();
+            }
             if(!count(LibrosPreseleccion::where('libro_id',$objetolibro["id"])->get()) ){
                 $preseleccion = new LibrosPreseleccion();
                 $preseleccion->libro_id = $objetolibro["id"];
@@ -177,6 +202,20 @@ class HomeController extends Controller
         $objetolibros = json_decode($request->get('objetolibros'),true);
 
         foreach ($objetolibros as $objetolibro){
+
+            if(!count(HistorialRegistrosLibros::where([
+                ['libro_id',$objetolibro["libro_id"]],
+                ['user_id',auth()->user()->id],
+                ['tipo_registro_id',2]
+
+            ])->get()) ){
+                $historial = new HistorialRegistrosLibros();
+                $historial->libro_id = $objetolibro["libro_id"];
+                $historial->user_id = auth()->user()->id;
+                $historial->tipo_registro_id = 2;
+                $historial->save();
+            }
+
             if(!count(LibrosPriorizacion::where('libro_id',$objetolibro["libro_id"])->get()) ) {
                 $preseleccion = new LibrosPriorizacion();
                 $preseleccion->libro_preseleccionado_id = $objetolibro["id"];

@@ -6,9 +6,11 @@ use App\EdadLectura;
 use App\EdadLecturaPrioriza;
 use App\GeneroPrioriza;
 use App\Generos;
+use App\HistorialRegistrosLibros;
 use App\LibrosPreseleccion;
 use App\LibrosPriorizacion;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -19,6 +21,7 @@ class ComiteController extends Controller
 
     public function index(Request $request){
         if($request->user()->authorizeRoles(['comite_educativo','administrador_plataforma'])){
+
             $usuarios = User::Has('libros_preseleccion')->get();
             $generos = Generos::all();
             $edadeslecturas = EdadLectura::all();
@@ -42,6 +45,13 @@ class ComiteController extends Controller
                 }
             }
 
+            $libros = HistorialRegistrosLibros::where([
+                ['tipo_registro_id', '=', 2],
+                ['user_id', '=', auth()->user()->id]
+            ])->get();
+            if($libros===null){
+                $libros = [];
+            }
             return view('comite')
                 ->with('generos',$generos)
                 ->with('registroPriorizacion',$registroPriorizacion)
@@ -50,7 +60,8 @@ class ComiteController extends Controller
                 ->with('hiddenEdad',$hiddenEdad)
                 ->with('hiddenGenero',$hiddenGenero)
                 ->with('disabled',$disabled)
-                ->with('usuarios',$usuarios);
+                ->with('usuarios',$usuarios)
+                ->with('libros',$libros);
         }
 
     }
