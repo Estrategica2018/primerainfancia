@@ -87,7 +87,7 @@
                             <label for="">Roles</label>
                             <select class="selectpicker" multiple data-selected-text-format="count > 3" data-width="100%" title="Seleccione una o mas opciónes" data-live-search="true" id="roles">
                                 @foreach($roles as $role)
-                                    <option value={{$role->id}}>{{$role->name}}</option>
+                                    <option value={{$role->id}}>{{$role->description}}</option>
                                 @endforeach
 
                             </select>
