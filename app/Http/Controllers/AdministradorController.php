@@ -53,7 +53,7 @@ class AdministradorController extends Controller
             ->addColumn('roles', function ($usuario) {
                 $rol = "";
                 foreach ($usuario->roles as $role){
-                    $rol = $rol.''.$role->name.',';
+                    $rol = $rol.''.$role->description.',';
                 }
                 return  $rol;
             })

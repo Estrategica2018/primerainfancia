@@ -133,7 +133,7 @@
                             @endif
                             @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole(['administrador_plataforma','comite_educativo']))
                                     <li class="nav-item {{ (request()->is('comite')) ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{route('comite')}}">Comite Educativo</a>
+                                    <a class="nav-link" href="{{route('comite')}}">Comite Editorial</a>
                                 </li>
                             @endif
                             @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole(['administrador_plataforma','usuario']))
