@@ -124,7 +124,7 @@
                     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                          aria-labelledby="v-pills-home-tab">
                         <div class="col-sm-12 col-md-12 col-lg-12">
-                            <h3>Preselecciónnnnn</h3>
+                            <h3>Preselección</h3>
                         </div>
                         <hr>
                         <div class="border-top col-sm-12 col-md-12 col-lg-12">
