@@ -237,8 +237,8 @@
             var idObjectModal = null;
             var objectoLibros = [];
             var tablePreseleccionLibros = $('#example').DataTable({
-                processing: true,
-                serverSide: true,
+                //processing: true,
+                //serverSide: true,
                 'ajax': "{{ route('libros_dt')}}",
                 'columns': [
                     {
