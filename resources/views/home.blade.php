@@ -75,7 +75,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive">
-                        <table id="example2" class="mt-3 table table-striped table-bordered dt-responsive nowrap"
+                        <table id="example3" class="mt-3 table table-striped table-bordered dt-responsive nowrap"
                                style="width:100%">
                             <thead>
                             <tr>
@@ -87,6 +87,7 @@
                                 <th>Género</th>
                                 <th>Observación</th>
                                 <th>Proveedor</th>
+                                <th>Acción</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -100,6 +101,7 @@
                                     <td>{{$libroU->libros->generof->nombre}}</td>
                                     <td>{{$libroU->observacion}}</td>
                                     <td>{{$libroU->libros->proveedor}}</td>
+                                    <td><button class="btn btn-sm btn-danger eliminar" value={{$libroU->id}}>Eliminar</button></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -122,7 +124,7 @@
                     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                          aria-labelledby="v-pills-home-tab">
                         <div class="col-sm-12 col-md-12 col-lg-12">
-                            <h3>Preselección</h3>
+                            <h3>Preselecciónnnnn</h3>
                         </div>
                         <hr>
                         <div class="border-top col-sm-12 col-md-12 col-lg-12">
@@ -150,6 +152,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Check</th>
+                                    <th>ISBN</th>
+                                    <th width="20%">Título</th>
+                                    <th>Autor</th>
+                                    <th>Editorial</th>
+                                    <th>Proveedor</th>
+                                    <th>Nivel de lectura</th>
+                                    <th>Género</th>
+                                </tr>
+                                </tfoot>
                                 </tbody>
                             </table>
                         </div>
@@ -177,7 +191,7 @@
                                 </div>
                             </form>
                             <br>
-                            <table id="example2" class="table table-striped table-bordered dt-responsive nowrap"
+                            <table id="example2" class="display"
                                    style="width:100%">
                                 <thead>
                                 <tr>
@@ -193,6 +207,18 @@
                                 </thead>
                                 <tbody>
                                 </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Check</th>
+                                    <th>ISBN</th>
+                                    <th width="20%">Título</th>
+                                    <th>Autor</th>
+                                    <th>Editorial</th>
+                                    <th>Proveedor</th>
+                                    <th>Nivel de lectura</th>
+                                    <th>Género</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -241,8 +267,33 @@
                     selector: 'td:first-child'
                 }
             });
+
+
+            $('#example thead th').each( function (index,value) {
+                console.log(index,value)
+                if(index == 5 || index == 6 ){
+                    var title = $(this).text();
+                    $(this).html($(this).text()+'<br><input type="text" placeholder="Buscar '+title+'" />' );
+                }
+
+            } );
             var tableListaPreseleccionLibros = $('#example2').DataTable({
             });
+            var tableRegistroPreseleccionLibros = $('#example3').DataTable({
+            });
+
+
+            tablePreseleccionLibros.columns().every( function () {
+                var that = this;
+
+                $( 'input', this.header() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
 
             tablePreseleccionLibros.on('click', '.checkPartial', function (e) {
                 $tr = $(this).closest('tr');
@@ -357,8 +408,22 @@
                 })
             });
             $('#ver').on('click',function(){
+                tableRegistroPreseleccionLibros.destroy();
                $('#exampleModalCenter3').modal('show')
             })
+            $('#exampleModalCenter3').on('shown.bs.modal', function() {
+                tableRegistroPreseleccionLibros = $('#example3').DataTable({
+                })
+            });
+            tableRegistroPreseleccionLibros.on('click', '.eliminar', function (e) {
+                $tr = $(this).closest('tr');
+                let dataTable = tableRegistroPreseleccionLibros.row($tr).data();
+                if(dataTable === undefined){
+                    $row = $tr.prev('tr')
+                    dataTable= tableRegistroPreseleccionLibros.row($row).data();
+                }
+                console.log(dataTable)
+            });
         });
     </script>
 @endsection
