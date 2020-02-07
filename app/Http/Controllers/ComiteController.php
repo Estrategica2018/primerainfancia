@@ -49,8 +49,18 @@ class ComiteController extends Controller
                 ['tipo_registro_id', '=', 2],
                 ['user_id', '=', auth()->user()->id]
             ])->get();
+            $librosLiteraios = 0;
+            $librosInformativos = 0;
             if($libros===null){
                 $libros = [];
+            }else{
+                foreach($libros as $li){
+                    if($li->libros->categoriaf->id == 1){
+                        $librosInformativos++;
+                    }else{
+                        $librosLiteraios++;
+                    }
+                }
             }
             return view('comite')
                 ->with('generos',$generos)
@@ -61,7 +71,9 @@ class ComiteController extends Controller
                 ->with('hiddenGenero',$hiddenGenero)
                 ->with('disabled',$disabled)
                 ->with('usuarios',$usuarios)
-                ->with('libros',$libros);
+                ->with('libros',$libros)
+                ->with('librosInformativos',$librosInformativos)
+                ->with('librosLiterarios',$librosLiteraios);
         }
 
     }

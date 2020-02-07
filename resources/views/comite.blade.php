@@ -220,8 +220,18 @@
             </div>
             @endif
             <hr>
-            <button class="btn btn-success" id="registrar">Registrar libros</button>
-            <button class="btn btn-warning" id="ver">Ver libros seleccionados</button>
+            <div class="row">
+                <div class="col-md-3">
+                    <button class="btn btn-success" id="registrar">Registrar libros</button>
+                    <button class="btn btn-warning" id="ver">Ver libros seleccionados</button>
+                </div>
+                <div class="col-md-4">
+                    <h4 id="infoLiteratios">Nº libros literarios : {{$librosLiterarios}} </h4>
+                </div>
+                <div class="col-md-4">
+                    <h4 id="infoInformativos">Nº de libros informativos :{{$librosInformativos}}</h4>
+                </div>
+            </div>
             <br><br>
             <table id="example2" class="table table-striped table-bordered dt-responsive nowrap"
                    style="width:100%">
@@ -250,6 +260,8 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(document).ready(function() {
+            var infoLiterario = "{{$librosLiterarios}}"
+            var infoInformativo = "{{$librosInformativos}}"
             var lengEdadLectura ="{{count($edadeslecturas)}}"
             var lengGeneros ="{{count($generos)}}"
             var objectoLibros = [];
@@ -416,13 +428,33 @@
                             id: dataTable.id,
                             libro_id:dataTable.libro_id,
                         });
+                    if(dataTable.categoria == 'Literario'){
+                        infoLiterario = parseInt(infoLiterario)
+                        infoLiterario++
+                    }else
+                        {
+                            infoInformativo = parseInt(infoInformativo)
+                            infoInformativo++
+                        }
+
                 } else {
                     let dataTable = tablePreseleccionComiteLibros.row($tr).data();
 
                     objectoLibros = objectoLibros.filter(function (idLibro) {
                         return idLibro.id != dataTable.id;
                     });
+                    if(dataTable.categoria == 'Literario'){
+                        infoLiterario = parseInt(infoLiterario)
+                        infoLiterario--
+                    }else
+                    {
+                        infoInformativo = parseInt(infoInformativo)
+                        infoInformativo--
+                    }
                 }
+
+                $('#infoInformativos').html(`Nº libros infotmativos : ${infoInformativo}`)
+                $('#infoLiteratios').html(`Nº libros literarios : ${infoLiterario}`)
                 console.log(objectoLibros)
             });
             tableLibrosUsuarios.on('click', '.ver_libros', function (e) {
