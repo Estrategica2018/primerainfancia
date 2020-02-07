@@ -547,7 +547,13 @@
                                 text: "Libros registrados!",
                                 icon: "success",
                                 button: "Ok",
-                            })
+                            }).then((willDelete) => {
+                                if (willDelete) {
+                                    location.reload();
+                                } else {
+                                    location.reload();
+                                }
+                            });
                         },
                         error: function (response, xhr, request) {
 

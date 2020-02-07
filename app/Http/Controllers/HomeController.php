@@ -274,7 +274,7 @@ class HomeController extends Controller
             ['tipo_registro_id',1]
 
         ])->get())){
-           $libro = LibrosPreseleccion::where('libro_id',$request->get('libro_id'))->get()->each()->delete();
+           $libro = LibrosPreseleccion::where('libro_id',$request->get('libro_id'))->get();
            // $libro->delete();
         }
 
