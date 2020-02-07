@@ -363,6 +363,7 @@
                 var async = async || false;
                 var formDatas = new FormData();
                 formDatas.append('libro_id', dataTable[9]);
+                formDatas.append('tipo_lista', 1);
                 $.ajax({
                     url: route,
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},

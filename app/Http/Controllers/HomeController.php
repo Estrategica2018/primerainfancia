@@ -257,17 +257,25 @@ class HomeController extends Controller
         $libro = HistorialRegistrosLibros::where([
             ['libro_id',$request->get('libro_id')],
             ['user_id',auth()->user()->id],
-            ['tipo_registro_id',1]
+            ['tipo_registro_id',$request->get('tipo_lista')]
 
         ])->delete();
 
         if(!count(HistorialRegistrosLibros::where([
             ['libro_id',$request->get('libro_id')],
-            ['tipo_registro_id',1]
+            ['tipo_registro_id',$request->get('tipo_lista')]
 
         ])->get())){
 
-           $libro = LibrosPreseleccion::where('libro_id',$request->get('libro_id'))->delete();
+            switch (intval($request->get('tipo_lista'))){
+                case 1:
+                    $libro = LibrosPreseleccion::where('libro_id',$request->get('libro_id'))->delete();
+                break;
+                case 2:
+                    //$libro = LibrosPreseleccion::where('libro_id',$request->get('libro_id'))->delete();
+                break;
+            }
+
 
         }
 

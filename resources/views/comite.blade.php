@@ -63,6 +63,8 @@
                                 <th>Ditribuidor</th>
                                 <th>Autor</th>
                                 <th>ISBN</th>
+                                <th>Acción</th>
+                                <th hidden>libro_id</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -76,6 +78,8 @@
                                     <td>{{$libroU->libros->proveedor}}</td>
                                     <td>{{$libroU->libros->autor}}</td>
                                     <td>{{$libroU->libros->isbn}}</td>
+                                    <td><button class="btn btn-sm btn-danger eliminar">Eliminar</button></td>
+                                    <td hidden>{{$libroU->libro_id}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -261,6 +265,7 @@
     <script>
         $(document).ready(function() {
             var librosSeleccionados = <?php echo json_encode($libros); ?>;
+            console.log(librosSeleccionados);
             var infoLiterario = "{{$librosLiterarios}}"
             var infoInformativo = "{{$librosInformativos}}"
             var lengEdadLectura ="{{count($edadeslecturas)}}"
@@ -300,6 +305,8 @@
                     selector: 'td:first-child'
                 }
             });
+            var tableLibrosSeleccionados = $('#example').DataTable({
+            })
             var tableLibrosUsuarios = $('#example3').DataTable({
             })
             var libros_preseleccion_usuarios = $('#libros_preseleccion_usuarios').DataTable({
@@ -561,6 +568,57 @@
             });
             $('#ver').on('click', function () {
                 $('#exampleModalCenter3').modal('show')
+            });
+
+            tableLibrosSeleccionados.on('click', '.eliminar', function (e) {
+                $tr = $(this).closest('tr');
+                let dataTable = tableLibrosSeleccionados.row($tr).data();
+                console.log(dataTable,typeof dataTable)
+                if(dataTable === undefined){
+                    console.log('ingresa');
+                    $row = $tr.prev('tr')
+                    dataTable = tableLibrosSeleccionados.row($row).data();
+                }
+                console.log(dataTable)
+                var route = '{{ route('elminar_libro_preseleccion') }}';
+                var typeAjax = 'POST';
+                var async = async || false;
+                var formDatas = new FormData();
+                formDatas.append('libro_id', dataTable[9]);
+                formDatas.append('tipo_lista', 2);
+                $.ajax({
+                    url: route,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    cache: false,
+                    type: typeAjax,
+                    contentType: false,
+                    data: formDatas,
+                    processData: false,
+                    async: async,
+                    beforeSend: function () {
+
+                    },
+                    success: function (response, xhr, request) {
+                        console.log(response)
+                        swal({
+                            title: "Buen trabajo!",
+                            text: "Libro eliminado!",
+                            icon: "success",
+                            button: "Ok",
+                        }).then((willDelete) => {
+                            if (willDelete) {
+                                location.reload();
+                            } else {
+                                location.reload();
+                            }
+                        });
+
+                    },
+                    error: function (response, xhr, request) {
+
+                    }
+                });
+
             });
 
         } );
