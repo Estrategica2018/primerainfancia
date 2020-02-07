@@ -53,3 +53,6 @@ Route::post('editar_usuario', 'AdministradorController@editar_usuario')->name('e
 Route::get('/administrador_priorizacion', 'AdministradorController@index_priorizacion')->name('administrador_priorizacion');
 
 Route::post('registrar_libros_administrador_para_priorizacion', 'AdministradorController@registrar_libros_administrador_para_priorizacion')->name('registrar_libros_administrador_para_priorizacion');
+
+Route::post('elminar_libro_preseleccion', 'HomeController@elminar_libro_preseleccion')->name('elminar_libro_preseleccion');
+

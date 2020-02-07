@@ -181,8 +181,11 @@
         </div>
     </div>
     <div class="container-fluid">
+        <div class="mt-3 col-sm-12 col-md-12 col-lg-12">
+            <h3>Administrador gestión usuarios</h3>
+        </div>
+        <hr>
         <div class="col-md-12">
-            <br>
             <button class="btn btn-success btn-sm" id="crearUsuario">Crear usuario</button>
             <div class="float-right"><button class="btn btn-danger btn-sm" id="reiniciar">Reiniciar tablas</button></div>
             <hr>

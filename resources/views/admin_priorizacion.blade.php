@@ -91,8 +91,12 @@
     </div>
 
     <div class="container-fluid">
+        <div class="mt-3 col-sm-12 col-md-12 col-lg-12">
+            <h3>Administrador gestión priorización</h3>
+        </div>
+        <hr>
         <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12" >
-            <br><br><br>
+            <br><br>
             <div class="row">
                 <div class="col-md-2">
                     <form class="was-validated">

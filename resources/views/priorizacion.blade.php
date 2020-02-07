@@ -102,7 +102,11 @@
     </div>
 
     <div class=" container-fluid">
-        <div class="card border-success mb-3">
+        <div class="mt-3 col-sm-12 col-md-12 col-lg-12">
+            <h3>Priorización</h3>
+        </div>
+        <hr>
+        <div class="card border-success mb-3" hidden>
             <div class="card-body text-success">
                 @if($hiddenEdad != "hidden")
                 <form action="javascript:void(0);" class="was-validated" id="rango_edades" {{$hiddenEdad}}>
@@ -163,7 +167,7 @@
         <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12" >
             <br>
             <button class="btn btn-primary" id="finalizar_registro">Finalizar registro de priorización</button>
-            <button class="btn btn-warning" id="ver">Libros priorizados</button>
+            <button class="btn btn-warning" id="ver">ver libros priorizados</button>
             <br><br>
             <!--table table-striped table-bordered dt-responsive nowrap-->
             <table id="example2" class="table table-striped table-bordered dt-responsive nowrap"
@@ -247,15 +251,15 @@
                 'ajax': "{{ route('libros_priorizacion_dt')}}",
                 'columns': [
                     {data: 'titulo', "width": "20%"},
-                    {data: 'editorial', className: 'text-center'},
+                    {data: 'editorial', className: ''},
                     {data: 'nivel_lectura', className: 'text-center'},
                     {data: 'genero', className: 'text-center'},
                     {data: 'categoria', className: 'text-center'},
                     {data: 'priorizacion', className: 'text-center'},
                     {data: 'evaluar', className: 'text-center'},
-                    {data: 'proveedor', className: 'text-center'},
-                    {data: 'autor', className: 'text-center'},
-                    {data: 'isbn', className: 'text-center'},
+                    {data: 'proveedor', className: ''},
+                    {data: 'autor', className: ''},
+                    {data: 'isbn', className: ''},
                     {data: 'nivel_id', "visible": false,},
                     {data: 'genero_id', "visible": false,},
                 ]

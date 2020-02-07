@@ -101,7 +101,7 @@
                                     <td>{{$libroU->libros->proveedor}}</td>
                                     <td>{{$libroU->libros->autor}}</td>
                                     <td>{{$libroU->libros->isbn}}</td>
-                                    <td><button class="btn btn-sm btn-danger eliminar" value={{$libroU->id}}>Eliminar</button></td>
+                                    <td><button class="btn btn-sm btn-danger eliminar" value={{$libroU->libros->id}}>Eliminar</button></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -115,7 +115,6 @@
             </div>
         </div>
     </div>
-
     <div class="container-fluid">
         <br>
         <div class="row">
@@ -134,7 +133,7 @@
                                 <span class="sr-only">unread messages</span>
                             </button>
                             <button type="button" class="btn btn-success mt-3 btn-sm" id="registrar"> Registrar libros</button>
-                            <button type="button" class="btn btn-warning mt-3 btn-sm" id="ver"> Libros registrados</button>
+                            <button type="button" class="btn btn-warning mt-3 btn-sm" id="ver"> Ver libros seleccionados</button>
                             <br>
                             <br>
                             <table id="example" class="mt-3 table table-striped table-bordered dt-responsive nowrap"
@@ -203,7 +202,7 @@
 
             $('#example thead th').each( function (index,value) {
                 console.log(index,value)
-                if(index == 5 || index == 6 ){
+                if(index == 3 || index == 4 || index == 5 ){
                     var title = $(this).text();
                     $(this).html($(this).text()+'<br><input type="text" placeholder="Buscar '+title+'" />' );
                 }
@@ -354,7 +353,45 @@
                     $row = $tr.prev('tr')
                     dataTable= tableRegistroPreseleccionLibros.row($row).data();
                 }
-                console.log(dataTable)
+                console.log(dataTable[9])
+                var route = '{{ route('elminar_libro_preseleccion') }}';
+                var typeAjax = 'POST';
+                var async = async || false;
+                var formDatas = new FormData();
+                formDatas.append('libro_id', dataTable[9]);
+                $.ajax({
+                    url: route,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    cache: false,
+                    type: typeAjax,
+                    contentType: false,
+                    data: formDatas,
+                    processData: false,
+                    async: async,
+                    beforeSend: function () {
+
+                    },
+                    success: function (response, xhr, request) {
+                        console.log(response)
+                        swal({
+                            title: "Buen trabajo!",
+                            text: "Libros eliminado!",
+                            icon: "success",
+                            button: "Ok",
+                        }).then((willDelete) => {
+                            if (willDelete) {
+                                location.reload();
+                            } else {
+                                location.reload();
+                            }
+                        });
+
+                    },
+                    error: function (response, xhr, request) {
+
+                    }
+                });
+
             });
         });
     </script>

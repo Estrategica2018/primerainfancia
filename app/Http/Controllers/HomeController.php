@@ -42,8 +42,9 @@ class HomeController extends Controller
             if($libros===null){
                 $libros = [];
             }else{
-                $libros = $libros->usuario_libros_registrados_preseleccion;
+                $libros = $libros->usuario_libros_registrados_preseleccion->where('tipo_registro_id',1)->where('user_id',1);
             }
+            //dd($libros);
             return view('home')->with('libros',$libros);
         }
         if($request->user()->authorizeRoles(['comite_educativo'])){
@@ -249,5 +250,33 @@ class HomeController extends Controller
             'cupos asignados exitosamente!',
             200
         );
+    }
+
+    public function elminar_libro_preseleccion (Request $request) {
+
+        if(!count(HistorialRegistrosLibros::where([
+            ['libro_id',$request->get('libro_id')],
+            ['user_id',auth()->user()->id],
+            ['tipo_registro_id',1]
+
+        ])->get()) ){
+
+            $Libro = HistorialRegistrosLibros::where([
+                ['libro_id',$request->get('libro_id')],
+                ['user_id',auth()->user()->id],
+                ['tipo_registro_id',1]
+
+            ])->get();
+            $Libro->delete();
+        }
+        if(!count(HistorialRegistrosLibros::where([
+            ['libro_id',$request->get('libro_id')],
+            ['tipo_registro_id',1]
+
+        ])->get())){
+           $libro = LibrosPreseleccion::where('libro_id',$request->get('libro_id'))->get()->each()->delete();
+           // $libro->delete();
+        }
+
     }
 }

@@ -3,8 +3,12 @@
 
 @section('content')
     <div class=" container-fluid">
+        <div class="mt-3 col-sm-12 col-md-12 col-lg-12">
+            <h3>Priorización resultado</h3>
+        </div>
+        <hr>
         <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12" >
-            <div class="card border-success mb-3">
+            <div class="card border-success mb-3" hidden>
                 <div class="card-body text-success">
                     @if($hiddenEdad != "hidden")
                         <form action="javascript:void(0);" class="was-validated" id="rango_edades" {{$hiddenEdad}}>

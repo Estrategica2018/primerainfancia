@@ -89,10 +89,13 @@
             </div>
         </div>
     </div>
-
     <div class="container-fluid">
+        <div class="mt-3 col-sm-12 col-md-12 col-lg-12">
+            <h3>Comite editorial</h3>
+        </div>
+        <hr>
         <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12" >
-            <br><br><br>
+            <br><br>
             <div class="row" hidden>
                 <div class="col-md-2">
                         <form class="was-validated">
@@ -218,7 +221,7 @@
             @endif
             <hr>
             <button class="btn btn-success" id="registrar">Registrar libros</button>
-            <button class="btn btn-warning" id="ver">Libros registrados</button>
+            <button class="btn btn-warning" id="ver">Ver libros seleccionados</button>
             <br><br>
             <table id="example2" class="table table-striped table-bordered dt-responsive nowrap"
                    style="width:100%">
@@ -260,14 +263,14 @@
                         defaultContent: '<div class="i-checks"><label> <input class="checkPartial" type="checkbox"  value=""> <i></i> </label></div>'
                     },
                     {data: 'titulo', "width": "20%"},
-                    {data: 'editorial', className: 'text-center'},
+                    {data: 'editorial', className: ''},
                     {data: 'nivel_lectura', className: 'text-center'},
                     {data: 'genero', className: 'text-center'},
                     {data: 'categoria', className: 'text-center'},
                     {data: 'coincidenciapre', className: 'text-center'},
-                    {data: 'coincidenciacom', className: 'text-center'},
-                    {data: 'proveedor', className: 'text-center'},
-                    {data: 'autor', className: 'text-center'},
+                    {data: 'coincidenciacom', visible: false},
+                    {data: 'proveedor', className: ''},
+                    {data: 'autor', className: ''},
                     {data: 'isbn', className: 'text-center'},
                 ],
                 order: [[1, "asc"]],
