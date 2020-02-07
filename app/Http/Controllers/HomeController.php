@@ -254,28 +254,21 @@ class HomeController extends Controller
 
     public function elminar_libro_preseleccion (Request $request) {
 
-        if(!count(HistorialRegistrosLibros::where([
+        $libro = HistorialRegistrosLibros::where([
             ['libro_id',$request->get('libro_id')],
             ['user_id',auth()->user()->id],
             ['tipo_registro_id',1]
 
-        ])->get()) ){
+        ])->delete();
 
-            $Libro = HistorialRegistrosLibros::where([
-                ['libro_id',$request->get('libro_id')],
-                ['user_id',auth()->user()->id],
-                ['tipo_registro_id',1]
-
-            ])->get();
-            $Libro->delete();
-        }
         if(!count(HistorialRegistrosLibros::where([
             ['libro_id',$request->get('libro_id')],
             ['tipo_registro_id',1]
 
         ])->get())){
-           $libro = LibrosPreseleccion::where('libro_id',$request->get('libro_id'))->get();
-           // $libro->delete();
+
+           $libro = LibrosPreseleccion::where('libro_id',$request->get('libro_id'))->delete();
+           
         }
 
     }

@@ -88,6 +88,7 @@
                                 <th>Autor</th>
                                 <th>ISBN</th>
                                 <th>Acción</th>
+                                <th hidden>libro_id</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -102,6 +103,7 @@
                                     <td>{{$libroU->libros->autor}}</td>
                                     <td>{{$libroU->libros->isbn}}</td>
                                     <td><button class="btn btn-sm btn-danger eliminar" value={{$libroU->libros->id}}>Eliminar</button></td>
+                                    <td hidden>{{$libroU->libros->id}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -349,11 +351,13 @@
             tableRegistroPreseleccionLibros.on('click', '.eliminar', function (e) {
                 $tr = $(this).closest('tr');
                 let dataTable = tableRegistroPreseleccionLibros.row($tr).data();
+                console.log(dataTable,typeof dataTable)
                 if(dataTable === undefined){
+                    console.log('ingresa');
                     $row = $tr.prev('tr')
-                    dataTable= tableRegistroPreseleccionLibros.row($row).data();
+                    dataTable = tableRegistroPreseleccionLibros.row($row).data();
                 }
-                console.log(dataTable[9])
+                console.log(dataTable)
                 var route = '{{ route('elminar_libro_preseleccion') }}';
                 var typeAjax = 'POST';
                 var async = async || false;
