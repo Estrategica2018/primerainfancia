@@ -154,6 +154,9 @@ class ComiteController extends Controller
             ->addColumn('evaluar', function ($libros) {
                 return  '<button type="button" class="btn btn-info btn-sm evaluardt">Evaluar</button>';
             })
+            ->addColumn('categoria', function ($libros) {
+                return $libros->libro->categoriaf->nombre;
+            })
             ->rawColumns(['priorizacion','evaluar'])
             ->make(true);
 

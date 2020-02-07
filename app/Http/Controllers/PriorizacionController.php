@@ -40,7 +40,7 @@ class PriorizacionController extends Controller
                 }
             }
             $libros = HistorialRegistrosLibros::where([
-                ['tipo_registro_id', '=', 3],
+                ['tipo_registro_id', '=', 4],
                 ['user_id', '=', auth()->user()->id]
             ])->get();
             if($libros===null){
@@ -194,7 +194,8 @@ class PriorizacionController extends Controller
             ->join('libros as od', 'od.id', '=', 'o.libro_id')
             ->join('generos as g', 'g.id', '=', 'od.genero')
             ->join('edad_lecturas as e', 'e.id', '=', 'od.nivel_lectura')
-            ->selectRaw('*,e.nombre as nom_edad,g.nombre as nom_genero, sum(o.priorizacion) as sum')
+            ->join('categoria_libros as ca', 'ca.id', '=', 'od.categoria')
+            ->selectRaw('*,e.nombre as nom_edad,g.nombre as nom_genero,ca.nombre as nom_categoria, sum(o.priorizacion) as sum')
             ->groupBy('o.libro_id')
             ->orderBy('sum', 'desc')
             ->get();
@@ -225,6 +226,10 @@ class PriorizacionController extends Controller
             ->addColumn('resultado', function ($libros) {
                 return $libros->sum;
             })
+            ->addColumn('categoria', function ($libros) {
+                return $libros->nom_categoria;
+            })
+
 
             ->make(true);
 

@@ -51,26 +51,25 @@
                                style="width:100%">
                             <thead>
                             <tr>
-                                <th>ISBN</th>
                                 <th width="20%">Título</th>
-                                <th>Autor</th>
                                 <th>Editorial</th>
                                 <th>Nivel de lectura</th>
                                 <th>Género</th>
-                                <th>Distribuidor</th>
+                                <th>Categoria</th>
                                 <th>Priorización</th>
+                                <th>Distribuidor</th>
+                                <th>Autor</th>
+                                <th>ISBN</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($libros as $libroU)
                                 <tr>
-                                    <td>{{$libroU->libros->isbn}}</td>
                                     <td>{{$libroU->libros->titulo}}</td>
-                                    <td>{{$libroU->libros->autor}}</td>
                                     <td>{{$libroU->libros->editorial}}</td>
                                     <td>{{$libroU->libros->edadf->nombre}}</td>
                                     <td>{{$libroU->libros->generof->nombre}}</td>
-                                    <td>{{$libroU->libros->proveedor}}</td>
+                                    <td>{{$libroU->libros->categoriaf->nombre}}</td>
                                     @switch ($libroU->priorizacion)
                                         @case('10')
                                             <td><h5><span class="badge badge-success">Muy Alta</span></h5></td>
@@ -85,6 +84,9 @@
                                             <td><h5><span class="badge badge-danger">Baja</span></h5></td>
                                         @break
                                     @endswitch
+                                    <td>{{$libroU->libros->proveedor}}</td>
+                                    <td>{{$libroU->libros->autor}}</td>
+                                    <td>{{$libroU->libros->isbn}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -168,15 +170,16 @@
                    style="width:100%">
                 <thead>
                 <tr>
-                    <th>ISBN</th>
                     <th width="20%">Título</th>
-                    <th>Autor</th>
                     <th>Editorial</th>
                     <th>Nivel de lectura</th>
                     <th>Género</th>
+                    <th>Categoria</th>
                     <th>Priorización</th>
                     <th>Evaluar</th>
                     <th>Distribuidor</th>
+                    <th>Autor</th>
+                    <th>ISBN</th>
                     <th hidden>nivel_id</th>
                     <th hidden>genero_id</th>
                 </tr>
@@ -243,15 +246,16 @@
                 "serverSide": false,
                 'ajax': "{{ route('libros_priorizacion_dt')}}",
                 'columns': [
-                    {data: 'isbn', className: 'text-center'},
                     {data: 'titulo', "width": "20%"},
-                    {data: 'autor', className: 'text-center'},
                     {data: 'editorial', className: 'text-center'},
                     {data: 'nivel_lectura', className: 'text-center'},
                     {data: 'genero', className: 'text-center'},
+                    {data: 'categoria', className: 'text-center'},
                     {data: 'priorizacion', className: 'text-center'},
                     {data: 'evaluar', className: 'text-center'},
                     {data: 'proveedor', className: 'text-center'},
+                    {data: 'autor', className: 'text-center'},
+                    {data: 'isbn', className: 'text-center'},
                     {data: 'nivel_id', "visible": false,},
                     {data: 'genero_id', "visible": false,},
                 ]

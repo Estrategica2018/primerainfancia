@@ -85,15 +85,15 @@
                    style="width:100%">
                 <thead>
                 <tr>
-                    <th>ISBN</th>
                     <th width="20%">Título</th>
-                    <th>Autor</th>
                     <th>Editorial</th>
-
                     <th>Nivel de lectura</th>
                     <th>Género</th>
+                    <th>Categoria</th>
                     <th>Resultado priorización</th>
                     <th>Distribuidor</th>
+                    <th>Autor</th>
+                    <th>ISBN</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -111,14 +111,15 @@
                 serverSide: true,
                 'ajax': "{{ route('resultado_libros_logistica_priorizacion_dt')}}",
                 'columns': [
-                    {data: 'isbn', className: 'text-center'},
                     {data: 'titulo', "width": "20%"},
-                    {data: 'autor', className: 'text-center'},
                     {data: 'editorial', className: 'text-center'},
                     {data: 'nivel_lectura', className: 'text-center'},
                     {data: 'genero', className: 'text-center'},
+                    {data: 'categoria', className: 'text-center'},
                     {data: 'resultado', className: 'text-center'},
                     {data: 'proveedor', className: 'text-center'},
+                    {data: 'autor', className: 'text-center'},
+                    {data: 'isbn', className: 'text-center'},
                 ]
             });
 
