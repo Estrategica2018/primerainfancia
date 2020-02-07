@@ -57,7 +57,7 @@
                                 <th>Editorial</th>
                                 <th>Nivel de lectura</th>
                                 <th>Género</th>
-                                <th>Proveedor</th>
+                                <th>Distribuidor</th>
                                 <th>Priorización</th>
                             </tr>
                             </thead>
@@ -71,7 +71,20 @@
                                     <td>{{$libroU->libros->edadf->nombre}}</td>
                                     <td>{{$libroU->libros->generof->nombre}}</td>
                                     <td>{{$libroU->libros->proveedor}}</td>
-                                    <td>{{$libroU->priorizacion}}</td>
+                                    @switch ($libroU->priorizacion)
+                                        @case('10')
+                                            <td><h5><span class="badge badge-success">Muy Alta</span></h5></td>
+                                        @break
+                                        @case('8')
+                                            <td><h5><span class="badge badge-warning">Alta</span></h5></td>
+                                        @break
+                                        @case('6')
+                                            <td><h5><span class="badge badge-primary">Media</span></h5></td>
+                                        @break
+                                        @case('4')
+                                            <td><h5><span class="badge badge-danger">Baja</span></h5></td>
+                                        @break
+                                    @endswitch
                                 </tr>
                             @endforeach
                             </tbody>
@@ -163,7 +176,7 @@
                     <th>Género</th>
                     <th>Priorización</th>
                     <th>Evaluar</th>
-                    <th>Proveedor</th>
+                    <th>Distribuidor</th>
                     <th hidden>nivel_id</th>
                     <th hidden>genero_id</th>
                 </tr>
@@ -226,6 +239,8 @@
                 }
             }
             var tablePreseleccionComiteLibros = $('#example2').DataTable({
+                "processing": true,
+                "serverSide": false,
                 'ajax': "{{ route('libros_priorizacion_dt')}}",
                 'columns': [
                     {data: 'isbn', className: 'text-center'},
@@ -346,6 +361,12 @@
                             text: "Libros registrados!",
                             icon: "success",
                             button: "Ok",
+                        }).then((willDelete) => {
+                            if (willDelete) {
+                                location.reload();
+                            } else {
+                                location.reload();
+                            }
                         });
                     },
                     error: function (response, xhr, request) {

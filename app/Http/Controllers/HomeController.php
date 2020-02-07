@@ -142,6 +142,9 @@ class HomeController extends Controller
             ->addColumn('genero', function ($libros) {
                 return $libros->generof->nombre;
             })
+            ->addColumn('categoria', function ($libros) {
+                return $libros->categoriaf->nombre;
+            })
 
             ->make(true);
     }
@@ -215,14 +218,14 @@ class HomeController extends Controller
                 $historial->tipo_registro_id = 2;
                 $historial->save();
             }
-
+/*
             if(!count(LibrosPriorizacion::where('libro_id',$objetolibro["libro_id"])->get()) ) {
                 $preseleccion = new LibrosPriorizacion();
                 $preseleccion->libro_preseleccionado_id = $objetolibro["id"];
                 $preseleccion->libro_id = $objetolibro["libro_id"];
                 $preseleccion->save();
             }
-
+*/
         }
         return response()->json(
             'preselección de libros exitosa!',

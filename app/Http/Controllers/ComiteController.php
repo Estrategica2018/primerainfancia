@@ -90,10 +90,27 @@ class ComiteController extends Controller
             ->addColumn('nivel_lectura', function ($libros) {
                 return $libros->libro->edadf->nombre;
             })
+            ->addColumn('categoria', function ($libros) {
+                return $libros->libro->categoriaf->nombre;
+            })
             ->addColumn('genero', function ($libros) {
                 return $libros->libro->generof->nombre;
             })
-
+            ->addColumn('coincidenciapre', function ($libros) {
+                return count(HistorialRegistrosLibros::where([
+                    ['libro_id',$libros->libro_id],
+                    ['tipo_registro_id',1]
+                ])->get());
+            })
+            ->addColumn('coincidenciacom', function ($libros) {
+                return count(HistorialRegistrosLibros::where([
+                    ['libro_id',$libros->libro_id],
+                    ['tipo_registro_id',2]
+                ])->get());
+            })
+            ->addColumn('categoria_id', function ($libros) {
+                return $libros->libro->categoria_id;
+            })
             ->make(true);
 
     }

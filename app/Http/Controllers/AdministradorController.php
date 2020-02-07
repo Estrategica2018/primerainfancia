@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\CalificacionLibrosPriorizacion;
+use App\EdadLectura;
 use App\EdadLecturaPrioriza;
 use App\GeneroPrioriza;
+use App\Generos;
+use App\HistorialRegistrosLibros;
 use App\LibrosPreseleccion;
 use App\LibrosPriorizacion;
 use App\Role;
@@ -125,5 +128,101 @@ class AdministradorController extends Controller
             'usuario editado!',
             200
         );
+    }
+
+    public function index_priorizacion(){
+
+        $usuarios = User::Has('libros_preseleccion')->get();
+        $generos = Generos::all();
+        $edadeslecturas = EdadLectura::all();
+        $registroPriorizacion = false;
+        $tipoPriorizacion = "";
+        $disabled = "";
+        $hiddenEdad = "";
+        $hiddenGenero = "hidden";
+        if(count(EdadLecturaPrioriza::all())){
+            $registroPriorizacion = true;
+            $tipoPriorizacion = "rango_edad";
+            $disabled = "disabled";
+            $hiddenEdad = "";
+        }else{
+            if(count(GeneroPrioriza::all())){
+                $registroPriorizacion = true;
+                $tipoPriorizacion = "rango_genero";
+                $disabled = "disabled";
+                $hiddenGenero = "";
+                $hiddenEdad = "hidden";
+            }
+        }
+
+        $libros = HistorialRegistrosLibros::where([
+            ['tipo_registro_id', '=', 2],
+            ['user_id', '=', auth()->user()->id]
+        ])->get();
+        if($libros===null){
+            $libros = [];
+        }
+
+        //$informativo = 0;
+        //$literario = 0;
+
+        $informativoPorcentaje = (count(HistorialRegistrosLibros::whereHas('libros',function ($query){
+            return $query->where('categoria',1);
+        })->where([
+            ['tipo_registro_id', '=', 3],
+        ])->get()) / 220) * 100;
+        $literarioPorcentaje = (count(HistorialRegistrosLibros::whereHas('libros',function ($query){
+            return $query->where('categoria',2);
+        })->where([
+            ['tipo_registro_id', '=', 3],
+        ])->get()) / 220) *100;
+
+        //dd($informativoPorcentaje,$literarioPorcentaje);
+
+
+        return view('admin_priorizacion')
+            ->with('generos',$generos)
+            ->with('registroPriorizacion',$registroPriorizacion)
+            ->with('edadeslecturas',$edadeslecturas)
+            ->with('tipoPriorizacion',$tipoPriorizacion)
+            ->with('hiddenEdad',$hiddenEdad)
+            ->with('hiddenGenero',$hiddenGenero)
+            ->with('disabled',$disabled)
+            ->with('usuarios',$usuarios)
+            ->with('libros',$libros)
+            ->with('informativoPorcentaje',$informativoPorcentaje)
+            ->with('literarioPorcentaje',$literarioPorcentaje);
+
+    }
+
+    public function registrar_libros_administrador_para_priorizacion (Request $request){
+
+        $objetolibros = json_decode($request->get('objetolibros'),true);
+
+        foreach ($objetolibros as $objetolibro ){
+
+            if(!count(HistorialRegistrosLibros::where([
+                ['libro_id',$objetolibro["libro_id"]],
+                ['user_id',auth()->user()->id],
+                ['tipo_registro_id',3]
+
+            ])->get()) ){
+                $historial = new HistorialRegistrosLibros();
+                $historial->libro_id = $objetolibro["libro_id"];
+                $historial->user_id = auth()->user()->id;
+                $historial->tipo_registro_id = 3;
+                $historial->save();
+            }
+
+            if(!count(LibrosPriorizacion::where('libro_id',$objetolibro["libro_id"])->get()) ) {
+                $preseleccion = new LibrosPriorizacion();
+                $preseleccion->libro_preseleccionado_id = $objetolibro["id"];
+                $preseleccion->libro_id = $objetolibro["libro_id"];
+                $preseleccion->save();
+            }
+        }
+
+
+
     }
 }

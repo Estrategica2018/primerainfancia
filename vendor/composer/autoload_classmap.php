@@ -13,6 +13,7 @@ return array(
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\GeneroPrioriza' => $baseDir . '/app/GeneroPrioriza.php',
     'App\\Generos' => $baseDir . '/app/Generos.php',
+    'App\\HistorialRegistrosLibros' => $baseDir . '/app/HistorialRegistrosLibros.php',
     'App\\Http\\Controllers\\AdministradorController' => $baseDir . '/app/Http/Controllers/AdministradorController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',

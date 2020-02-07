@@ -387,6 +387,7 @@ class ComposerStaticInitbc72874a03d7676f515fec41b193182e
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\GeneroPrioriza' => __DIR__ . '/../..' . '/app/GeneroPrioriza.php',
         'App\\Generos' => __DIR__ . '/../..' . '/app/Generos.php',
+        'App\\HistorialRegistrosLibros' => __DIR__ . '/../..' . '/app/HistorialRegistrosLibros.php',
         'App\\Http\\Controllers\\AdministradorController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdministradorController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',

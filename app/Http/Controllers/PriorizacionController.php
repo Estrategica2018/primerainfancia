@@ -89,12 +89,12 @@ class PriorizacionController extends Controller
                 if(!count(HistorialRegistrosLibros::where([
                 ['libro_id',$objetolibro["libro_id"]],
                 ['user_id',auth()->user()->id],
-                ['tipo_registro_id',3]
+                ['tipo_registro_id',4]
             ]   )->get()) ){
                     $historial = new HistorialRegistrosLibros();
                     $historial->libro_id = $objetolibro["libro_id"];
                     $historial->user_id = auth()->user()->id;
-                    $historial->tipo_registro_id = 3;
+                    $historial->tipo_registro_id = 4;
                     $historial->priorizacion = $objetolibro['priorizacion'];
                     $historial->save();
                 }

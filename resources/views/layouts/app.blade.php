@@ -47,19 +47,41 @@
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js" type="text/javascript"></script>
 
 </head>
-<body>
 <style>
-     .py-4 {
+    /*
+    .py-4 {
         padding-top: 0.5rem!important;
     }
-     .footer {
-         position: relative;
-         margin-top: -150px; /* negative value of footer height */
-         height: 150px;
-         clear:both;
-         padding-top:20px;
-     }
+    .footer {
+        position: relative;
+        margin-top: -150px;
+        height: 150px;
+        clear:both;
+        padding-top:20px;
+    }
+    body{
+        font-size: x-small;
+        font-weight: 400;
+    }
+    .btn-group-sm>.btn, .btn-sm {
+        padding: .23rem .5rem;
+        font-size: .700rem;
+        line-height: 0.8;
+        border-radius: .2rem;
+    }
+    .table td, .table th {
+        padding: .5rem;
+        vertical-align: baseline;
+        border-top: 0.7px solid #dee2e6;
+    }
+    .form-control {
+
+        font-size: 0.7rem;
+        font-weight: 400;
+    }
+*/
 </style>
+<body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container" style="display: contents;">
@@ -119,13 +141,18 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
+                        <ul class="navbar-nav ">
                             @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole(['administrador_plataforma']))
-                                <li class="nav-item {{ (request()->is('administrador')) ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{route('administrador')}}">Administrador</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Administrador
+                                    </a>
+                                    <div class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown">
+                                        <a class="nav-link" href="{{route('administrador')}}">Gestión usuarios</a>
+                                        <a class="nav-link" href="{{route('administrador_priorizacion')}}">Gestión priorización</a>
+                                    </div>
                                 </li>
                             @endif
-
                             @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole(['administrador_plataforma','ministerio']))
                                 <li class="nav-item {{ (request()->is('home','/')) ? 'active' : '' }}">
                                     <a class="nav-link" href="{{route('home')}}">Preselección <span class="sr-only">(current)</span></a>
@@ -141,15 +168,16 @@
                                     <a class="nav-link" href="{{route('priorizacion')}}">Priorización</a>
                                 </li>
                             @endif
-                            <li class="nav-item {{ (request()->is('priorizacion_resultado')) ? 'active' : '' }}">
-                                <a class="nav-link" href="{{route('priorizacion_resultado')}}">Priorización resultado</a>
-                            </li>
+                            @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole(['administrador_plataforma']))
+                                <li class="nav-item {{ (request()->is('priorizacion_resultado')) ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{route('priorizacion_resultado')}}">Priorización resultado</a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </nav>
             </div>
             @endguest
-            <br>
             @yield('content')
         </main>
     </div>

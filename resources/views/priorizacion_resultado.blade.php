@@ -57,7 +57,7 @@
                     <th>Nivel de lectura</th>
                     <th>Género</th>
                     <th>Resultado Priorización</th>
-                    <th>Proveedor</th>
+                    <th>Distribuidor</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -93,7 +93,7 @@
                     <th>Nivel de lectura</th>
                     <th>Género</th>
                     <th>Resultado priorización</th>
-                    <th>Proveedor</th>
+                    <th>Distribuidor</th>
                 </tr>
                 </thead>
                 <tbody>

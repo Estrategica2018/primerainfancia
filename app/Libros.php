@@ -18,4 +18,9 @@ class Libros extends Model
 
         return $this->belongsTo(EdadLectura::class,'nivel_lectura', 'id');
     }
+
+    public function categoriaf () {
+        //dd('ingresa');
+        return $this->belongsTo(CategoriaLibros::class,'categoria', 'id');
+    }
 }

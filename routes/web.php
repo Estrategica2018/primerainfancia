@@ -50,3 +50,6 @@ Route::post('reiniciar_tablas', 'AdministradorController@reiniciar_tablas')->nam
 
 Route::post('editar_usuario', 'AdministradorController@editar_usuario')->name('editar_usuario');
 
+Route::get('/administrador_priorizacion', 'AdministradorController@index_priorizacion')->name('administrador_priorizacion');
+
+Route::post('registrar_libros_administrador_para_priorizacion', 'AdministradorController@registrar_libros_administrador_para_priorizacion')->name('registrar_libros_administrador_para_priorizacion');

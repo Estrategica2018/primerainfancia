@@ -61,7 +61,7 @@
                                 <th>Editorial</th>
                                 <th>Nivel de lectura</th>
                                 <th>Género</th>
-                                <th>Ditribuidor</th>
+                                <th>Distribuidor</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -91,29 +91,29 @@
     <div class="container-fluid">
         <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12" >
             <br><br><br>
-            <div class="row" hidden>
+            <div class="row">
                 <div class="col-md-2">
-                        <form class="was-validated">
-                            <div class="custom-control custom-radio">
-                                @if($tipoPriorizacion === "rango_edad")
-                                    <input {{$disabled}} checked type="radio" class="custom-control-input check1" id="customControlValidation2" name="radio-stacked" required>
-                                @else
-                                    <input {{$disabled}} checked type="radio" class="custom-control-input check1" id="customControlValidation2" name="radio-stacked" required>
-                                @endif
-                                <label class="custom-control-label" for="customControlValidation2">Rango edades</label>
-                            </div>
-                            <div class="custom-control custom-radio mb-3">
-                                @if($tipoPriorizacion === "rango_genero")
-                                    <input {{$disabled}} checked type="radio" class="custom-control-input check1" id="customControlValidation2" name="radio-stacked" required>
-                                @else
-                                    <input {{$disabled}} type="radio" class="custom-control-input check2" id="customControlValidation3" name="radio-stacked" required>
-                                @endif
+                    <form class="was-validated">
+                        <div class="custom-control custom-radio">
+                            @if($tipoPriorizacion === "rango_edad")
+                                <input {{$disabled}} checked type="radio" class="custom-control-input check1" id="customControlValidation2" name="radio-stacked" required>
+                            @else
+                                <input {{$disabled}} checked type="radio" class="custom-control-input check1" id="customControlValidation2" name="radio-stacked" required>
+                            @endif
+                            <label class="custom-control-label" for="customControlValidation2">Rango edades</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-3">
+                            @if($tipoPriorizacion === "rango_genero")
+                                <input {{$disabled}} checked type="radio" class="custom-control-input check1" id="customControlValidation2" name="radio-stacked" required>
+                            @else
+                                <input {{$disabled}} type="radio" class="custom-control-input check2" id="customControlValidation3" name="radio-stacked" required>
+                            @endif
 
-                                <label class="custom-control-label" for="customControlValidation3">Género</label>
-                                <div class="invalid-feedback">Seleccione el tipo de filtro</div>
-                            </div>
-                        </form>
-                    </div>
+                            <label class="custom-control-label" for="customControlValidation3">Género</label>
+                            <div class="invalid-feedback">Seleccione el tipo de filtro</div>
+                        </div>
+                    </form>
+                </div>
                 <div class="col-md-10">
                     @if($hiddenGenero == "hidden")
                         <form action="javascript:void(0);" class="was-validated" id="rango_edades" {{$hiddenEdad}}>
@@ -141,7 +141,7 @@
                         </form>
                     @endif
 
-                        <form action="javascript:void(0);" class="was-validated" id="rango_generos" {{$hiddenGenero}}>
+                    <form action="javascript:void(0);" class="was-validated" id="rango_generos" {{$hiddenGenero}}>
                         <h4>Géneros</h4>
                         <div class="form-row">
                             @foreach($generos as $genero)
@@ -174,48 +174,73 @@
 
                 </div>
             </div>
-            @if(auth()->user()->hasAnyRole(['admin_comite','administrador_plataforma']))
-            <div class="row my-3">
+            <hr>
+            <div class="row">
                 <div class="col-md-12">
-                    <table id="example3" class="table table-striped table-bordered dt-responsive nowrap"
-                           style="width:100%">
-                        <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Cedula</th>
-                            <th>Correo</th>
-                            <th>Entidad</th>
-                            <th>Cargo</th>
-                            <th class="text-center">Libros</th>
-                            <th hidden></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($usuarios as $usario)
-                            <tr>
-                                <td>{{$usario->name}}</td>
-                                <td>{{$usario->numero_identificacion}}</td>
-                                <td>{{$usario->email}}</td>
-                                <td>{{$usario->entidad}}</td>
-                                <td>{{$usario->cargo}}</td>
-                                <td class="text-center"><button class="btn btn-success ver_libros btn-sm">
-                                        <svg class="bi bi-book" width="40px" height="22px" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M5.214 3.072c1.599-.32 3.702-.363 5.14 1.074a.5.5 0 01.146.354v11a.5.5 0 01-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 012 15.5v-11a.5.5 0 01.276-.447L2.5 4.5l-.224-.447.002-.001.004-.002.013-.006a5.116 5.116 0 01.22-.103 12.958 12.958 0 012.7-.869zM3 4.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V4.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 003 4.82z" clip-rule="evenodd"></path>
-                                            <path fill-rule="evenodd" d="M14.786 3.072c-1.598-.32-3.702-.363-5.14 1.074A.5.5 0 009.5 4.5v11a.5.5 0 00.854.354c.844-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0018 15.5v-11a.5.5 0 00-.276-.447L17.5 4.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 00-.799-.34 12.96 12.96 0 00-2.073-.609zM17 4.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.386-.023-3.426.56V4.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0117 4.82z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
-                                </td>
-                                <td hidden>{{$usario->id}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                    <form action="javascript:void(0);" class="was-validated" id="" >
+                            <h4>Porcentaje colección</h4>
+                            <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                    <label>Informativo %</label>
 
+                                    <input type="text" class="form-control is-invalid" id="informativo"  required value={{$informativoPorcentaje}}></input>
+                                    <div class="valid-feedback">
+                                        Correcto
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label>Literario %</label>
+                                    <input type="text" class="form-control is-invalid" id="literario"  required value={{$literarioPorcentaje}}></input>
+                                    <div class="valid-feedback">
+                                        Correcto
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                </div>
             </div>
+            @if(auth()->user()->hasAnyRole(['admin_comite','administrador_plataforma']))
+                <div class="row my-3">
+                    <div class="col-md-12">
+                        <table id="example3" class="table table-striped table-bordered dt-responsive nowrap"
+                               style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Cedula</th>
+                                <th>Correo</th>
+                                <th>Entidad</th>
+                                <th>Cargo</th>
+                                <th class="text-center">Libros</th>
+                                <th hidden></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($usuarios as $usario)
+                                <tr>
+                                    <td>{{$usario->name}}</td>
+                                    <td>{{$usario->numero_identificacion}}</td>
+                                    <td>{{$usario->email}}</td>
+                                    <td>{{$usario->entidad}}</td>
+                                    <td>{{$usario->cargo}}</td>
+                                    <td class="text-center"><button class="btn btn-success ver_libros btn-sm">
+                                            <svg class="bi bi-book" width="40px" height="22px" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M5.214 3.072c1.599-.32 3.702-.363 5.14 1.074a.5.5 0 01.146.354v11a.5.5 0 01-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 012 15.5v-11a.5.5 0 01.276-.447L2.5 4.5l-.224-.447.002-.001.004-.002.013-.006a5.116 5.116 0 01.22-.103 12.958 12.958 0 012.7-.869zM3 4.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V4.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 003 4.82z" clip-rule="evenodd"></path>
+                                                <path fill-rule="evenodd" d="M14.786 3.072c-1.598-.32-3.702-.363-5.14 1.074A.5.5 0 009.5 4.5v11a.5.5 0 00.854.354c.844-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0018 15.5v-11a.5.5 0 00-.276-.447L17.5 4.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 00-.799-.34 12.96 12.96 0 00-2.073-.609zM17 4.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.386-.023-3.426.56V4.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0117 4.82z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                    </td>
+                                    <td hidden>{{$usario->id}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
             @endif
             <hr>
-            <button class="btn btn-success" id="registrar">Registrar libros</button>
+            <button class="btn btn-success" id="registrar">Enviar lista a logística de priorización</button>
             <button class="btn btn-warning" id="ver">Libros registrados</button>
             <br><br>
             <table id="example2" class="table table-striped table-bordered dt-responsive nowrap"
@@ -230,8 +255,10 @@
                     <th>Distribuidor</th>
                     <th>Nivel lectura</th>
                     <th>Género</th>
+                    <th>Categoria</th>
                     <th>Coin/cia Pre</th>
                     <th>Coin/cia Comi</th>
+                    <th hidden>categoria_id</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -244,6 +271,8 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(document).ready(function() {
+            var literarioPorcentaje = "{{$literarioPorcentaje}}"
+            var informativoPorcentaje = "{{$informativoPorcentaje}}"
             var lengEdadLectura ="{{count($edadeslecturas)}}"
             var lengGeneros ="{{count($generos)}}"
             var objectoLibros = [];
@@ -263,8 +292,10 @@
                     {data: 'proveedor', className: 'text-center'},
                     {data: 'nivel_lectura', className: 'text-center'},
                     {data: 'genero', className: 'text-center'},
+                    {data: 'categoria', className: 'text-center'},
                     {data: 'coincidenciapre', className: 'text-center'},
                     {data: 'coincidenciacom', className: 'text-center'},
+                    {data: 'categoria_id', "visible": false},
                 ],
                 order: [[1, "asc"]],
                 columnDefs: [
@@ -409,12 +440,32 @@
                             id: dataTable.id,
                             libro_id:dataTable.libro_id,
                         });
+                    if(dataTable.categoria_id == 1){
+                        informativoPorcentaje = parseFloat(informativoPorcentaje)
+                        informativoPorcentaje  += (0.0045454545454545*100);
+                    }else{
+                        literarioPorcentaje = parseFloat(literarioPorcentaje)
+                        console.log(literarioPorcentaje,'resultadi0')
+                        literarioPorcentaje  += (0.0045454545454545*100);
+                        console.log(literarioPorcentaje,'resultadi2')
+                    }
+                    $('#informativo').val(informativoPorcentaje)
+                    $('#literario').val(literarioPorcentaje)
+
                 } else {
                     let dataTable = tablePreseleccionComiteLibros.row($tr).data();
-
                     objectoLibros = objectoLibros.filter(function (idLibro) {
                         return idLibro.id != dataTable.id;
                     });
+                    if(dataTable.categoria_id == 1){
+                        informativoPorcentaje = parseFloat(informativoPorcentaje)
+                        informativoPorcentaje  -= (0.0045454545454545*100);
+                    }else{
+                        literarioPorcentaje = parseFloat(literarioPorcentaje)
+                        literarioPorcentaje  -= (0.0045454545454545*100);
+                    }
+                    $('#informativo').val(informativoPorcentaje)
+                    $('#literario').val(literarioPorcentaje)
                 }
                 console.log(objectoLibros)
             });
@@ -484,7 +535,7 @@
                         button: "Ok",
                     });
                 } else {
-                    var route = '{{ route('registrar_libros_para_priorizacion') }}';
+                    var route = '{{ route('registrar_libros_administrador_para_priorizacion') }}';
                     var typeAjax = 'POST';
                     var async = async || false;
                     var formDatas = new FormData();

@@ -182,10 +182,10 @@
     </div>
     <div class="container-fluid">
         <div class="col-md-12">
-            <button class="btn btn-success" id="crearUsuario">Crear usuario</button>
-            <div class="float-right"><button class="btn btn-danger" id="reiniciar">Reiniciar tablas</button></div>
+            <br>
+            <button class="btn btn-success btn-sm" id="crearUsuario">Crear usuario</button>
+            <div class="float-right"><button class="btn btn-danger btn-sm" id="reiniciar">Reiniciar tablas</button></div>
             <hr>
-            <br><br>
             <table id="example3" class="table table-striped table-bordered dt-responsive nowrap"
                    style="width:100%">
                 <thead>

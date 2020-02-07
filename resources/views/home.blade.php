@@ -41,14 +41,14 @@
                                style="width:100%">
                             <thead>
                             <tr>
-                                <th>ISBN</th>
                                 <th width="20%">Título</th>
-                                <th>Autor</th>
                                 <th>Editorial</th>
                                 <th>Nivel de lectura</th>
                                 <th>Género</th>
-                                <th>Observación</th>
-                                <th>Proveedor</th>
+                                <th>Categoria</th>
+                                <th>Distribuidor</th>
+                                <th>Autor</th>
+                                <th>ISBN</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -79,28 +79,28 @@
                                style="width:100%">
                             <thead>
                             <tr>
-                                <th>ISBN</th>
                                 <th width="20%">Título</th>
-                                <th>Autor</th>
                                 <th>Editorial</th>
                                 <th>Nivel de lectura</th>
                                 <th>Género</th>
-                                <th>Observación</th>
-                                <th>Proveedor</th>
+                                <th>Categoria</th>
+                                <th>Distribuidor</th>
+                                <th>Autor</th>
+                                <th>ISBN</th>
                                 <th>Acción</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($libros as $libroU)
                                 <tr>
-                                    <td>{{$libroU->libros->isbn}}</td>
                                     <td>{{$libroU->libros->titulo}}</td>
-                                    <td>{{$libroU->libros->autor}}</td>
                                     <td>{{$libroU->libros->editorial}}</td>
                                     <td>{{$libroU->libros->edadf->nombre}}</td>
                                     <td>{{$libroU->libros->generof->nombre}}</td>
-                                    <td>{{$libroU->observacion}}</td>
+                                    <td>{{$libroU->libros->categoriaf->nombre}}</td>
                                     <td>{{$libroU->libros->proveedor}}</td>
+                                    <td>{{$libroU->libros->autor}}</td>
+                                    <td>{{$libroU->libros->isbn}}</td>
                                     <td><button class="btn btn-sm btn-danger eliminar" value={{$libroU->id}}>Eliminar</button></td>
                                 </tr>
                             @endforeach
@@ -140,90 +140,22 @@
                             <table id="example" class="mt-3 table table-striped table-bordered dt-responsive nowrap"
                                    style="width:100%">
                                 <thead>
-                                <tr>
+                                <tr>.
                                     <th>Check</th>
-                                    <th>ISBN</th>
                                     <th width="20%">Título</th>
-                                    <th>Autor</th>
                                     <th>Editorial</th>
                                     <th>Nivel de lectura</th>
                                     <th>Género</th>
-                                    <th>Proveedor</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Check</th>
-                                    <th>ISBN</th>
-                                    <th width="20%">Título</th>
+                                    <th>Categoria</th>
+                                    <th>Distribuidor</th>
                                     <th>Autor</th>
-                                    <th>Editorial</th>
-                                    <th>Proveedor</th>
-                                    <th>Nivel de lectura</th>
-                                    <th>Género</th>
-                                </tr>
-                                </tfoot>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
-                         aria-labelledby="v-pills-profile-tab">
-                        <div class="col-sm-12 col-md-12 col-lg-12">
-                            <h3>Comité educativo</h3>
-                        </div>
-                        <hr>
-                        <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12">
-                            <br>
-                            <form class="was-validated">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" id="customControlValidation2"
-                                           name="radio-stacked" required>
-                                    <label class="custom-control-label" for="customControlValidation2">Rango
-                                        edades</label>
-                                </div>
-                                <div class="custom-control custom-radio mb-3">
-                                    <input type="radio" class="custom-control-input" id="customControlValidation3"
-                                           name="radio-stacked" required>
-                                    <label class="custom-control-label" for="customControlValidation3">Género</label>
-                                    <div class="invalid-feedback">Seleccione el tipo de filtro</div>
-                                </div>
-                            </form>
-                            <br>
-                            <table id="example2" class="display"
-                                   style="width:100%">
-                                <thead>
-                                <tr>
-                                    <th>Check</th>
                                     <th>ISBN</th>
-                                    <th width="20%">Título</th>
-                                    <th>Autor</th>
-                                    <th>Editorial</th>
-                                    <th>Proveedor</th>
-                                    <th>Nivel de lectura</th>
-                                    <th>Género</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Check</th>
-                                    <th>ISBN</th>
-                                    <th width="20%">Título</th>
-                                    <th>Autor</th>
-                                    <th>Editorial</th>
-                                    <th>Proveedor</th>
-                                    <th>Nivel de lectura</th>
-                                    <th>Género</th>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
-                         aria-labelledby="v-pills-messages-tab">...
                     </div>
                 </div>
             </div>
@@ -245,13 +177,14 @@
                         data: 'check', className: 'text-center',
                         defaultContent: '<div class="i-checks"><label> <input class="checkPartial" type="checkbox"  value=""> <i></i> </label></div>'
                     },
-                    {data: 'isbn', className: 'text-center'},
                     {data: 'titulo', "width": "20%"},
-                    {data: 'autor', className: 'text-center'},
                     {data: 'editorial', className: 'text-center'},
                     {data: 'nivel_lectura', className: 'text-center'},
                     {data: 'genero', className: 'text-center'},
+                    {data: 'categoria', className: 'text-center'},
                     {data: 'proveedor', className: 'text-center'},
+                    {data: 'autor', className: 'text-center'},
+                    {data: 'isbn', className: 'text-center'},
                 ],
                 order: [[1, "asc"]],
                 columnDefs: [
@@ -267,7 +200,6 @@
                     selector: 'td:first-child'
                 }
             });
-
 
             $('#example thead th').each( function (index,value) {
                 console.log(index,value)
@@ -308,7 +240,7 @@
                             data:dataTable
                         });
                     idObjectModal = dataTable.id
-                    $('#exampleModalCenter').modal('show')
+                    //$('#exampleModalCenter').modal('show')
                     console.log(objectoLibros);
                 } else {
                     let dataTable = tablePreseleccionLibros.row($tr).data();
@@ -390,14 +322,14 @@
                     tableListaPreseleccionLibros.destroy();
                     $('#example2 tbody').html('');
                     $.each(objectoLibros, function (keyFirst, value) {
-                        newData += "<tr><td>" + value.data.isbn + "</td>";
-                        newData += "<td>" + value.data.titulo + "</td>";
-                        newData += "<td>" + value.data.autor + "</td>";
+                        newData += "<tr><td>" + value.data.titulo + "</td>";
                         newData += "<td>" + value.data.editorial + "</td>";
                         newData += "<td>" + value.data.nivel_lectura + "</td>";
                         newData += "<td>" + value.data.genero + "</td>";
-                        newData += "<td>" + value.observacion + "</td>";
-                        newData += "<td>" + value.data.proveedor + "</td></tr>";
+                        newData += "<td>" + value.data.categoria + "</td>";
+                        newData += "<td>" + value.data.proveedor + "</td>";
+                        newData += "<td>" + value.data.autor + "</td>";
+                        newData += "<td>" + value.data.isbn + "</td></tr>";
                     });
                     $('#example2').append(newData);
                 }
