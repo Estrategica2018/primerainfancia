@@ -17,14 +17,14 @@
                                style="width:100%">
                             <thead>
                             <tr>
-                                <th>ISBN</th>
                                 <th width="20%">Título</th>
-                                <th>Autor</th>
                                 <th>Editorial</th>
                                 <th>Nivel de lectura</th>
                                 <th>Género</th>
-                                <th>Observación</th>
+                                <th>Categoria</th>
                                 <th>Distribuidor</th>
+                                <th>Autor</th>
+                                <th>ISBN</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -55,25 +55,27 @@
                                style="width:100%">
                             <thead>
                             <tr>
-                                <th>ISBN</th>
                                 <th width="20%">Título</th>
-                                <th>Autor</th>
                                 <th>Editorial</th>
                                 <th>Nivel de lectura</th>
                                 <th>Género</th>
+                                <th>Categoria</th>
                                 <th>Ditribuidor</th>
+                                <th>Autor</th>
+                                <th>ISBN</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($libros as $libroU)
                                 <tr>
-                                    <td>{{$libroU->libros->isbn}}</td>
                                     <td>{{$libroU->libros->titulo}}</td>
-                                    <td>{{$libroU->libros->autor}}</td>
                                     <td>{{$libroU->libros->editorial}}</td>
                                     <td>{{$libroU->libros->edadf->nombre}}</td>
                                     <td>{{$libroU->libros->generof->nombre}}</td>
+                                    <td>{{$libroU->libros->categoriaf->nombre}}</td>
                                     <td>{{$libroU->libros->proveedor}}</td>
+                                    <td>{{$libroU->libros->autor}}</td>
+                                    <td>{{$libroU->libros->isbn}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -223,15 +225,16 @@
                 <thead>
                 <tr>
                     <th>Check</th>
-                    <th>ISBN</th>
                     <th width="20%">Título</th>
-                    <th>Autor</th>
                     <th>Editorial</th>
-                    <th>Distribuidor</th>
                     <th>Nivel lectura</th>
                     <th>Género</th>
+                    <th>Categoria</th>
                     <th>Coin/cia Pre</th>
                     <th>Coin/cia Comi</th>
+                    <th>Distribuidor</th>
+                    <th>Autor</th>
+                    <th>ISBN</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -256,15 +259,16 @@
                         data: 'check', className: 'text-center',
                         defaultContent: '<div class="i-checks"><label> <input class="checkPartial" type="checkbox"  value=""> <i></i> </label></div>'
                     },
-                    {data: 'isbn', className: 'text-center'},
                     {data: 'titulo', "width": "20%"},
-                    {data: 'autor', className: 'text-center'},
                     {data: 'editorial', className: 'text-center'},
-                    {data: 'proveedor', className: 'text-center'},
                     {data: 'nivel_lectura', className: 'text-center'},
                     {data: 'genero', className: 'text-center'},
+                    {data: 'categoria', className: 'text-center'},
                     {data: 'coincidenciapre', className: 'text-center'},
                     {data: 'coincidenciacom', className: 'text-center'},
+                    {data: 'proveedor', className: 'text-center'},
+                    {data: 'autor', className: 'text-center'},
+                    {data: 'isbn', className: 'text-center'},
                 ],
                 order: [[1, "asc"]],
                 columnDefs: [
@@ -453,14 +457,14 @@
                             }
                         },
                         columns: [
-                            {data: 'isbn', className: 'text-center'},
                             {data: 'titulo', "width": "20%"},
-                            {data: 'autor', className: 'text-center'},
                             {data: 'editorial', className: 'text-center'},
                             {data: 'nivel_lectura', className: 'text-center'},
                             {data: 'genero', className: 'text-center'},
-                            {data: 'observacion', className: 'text-center'},
+                            {data: 'categoria', className: 'text-center'},
                             {data: 'proveedor', className: 'text-center'},
+                            {data: 'autor', className: 'text-center'},
+                            {data: 'isbn', className: 'text-center'},
 
                         ]
                     })

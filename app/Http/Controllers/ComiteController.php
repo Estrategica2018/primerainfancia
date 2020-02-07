@@ -187,7 +187,7 @@ class ComiteController extends Controller
                 return $libros->libro->generof->nombre;
             })
             ->addColumn('categoria', function ($libros) {
-                return $libros->categoriaf->nombre;
+                return $libros->libro->categoriaf->nombre;
             })
             ->make(true);
     }
