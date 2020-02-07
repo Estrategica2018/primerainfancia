@@ -260,14 +260,15 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(document).ready(function() {
+            var librosSeleccionados = <?php echo json_encode($libros); ?>;
             var infoLiterario = "{{$librosLiterarios}}"
             var infoInformativo = "{{$librosInformativos}}"
             var lengEdadLectura ="{{count($edadeslecturas)}}"
             var lengGeneros ="{{count($generos)}}"
             var objectoLibros = [];
             var tablePreseleccionComiteLibros = $('#example2').DataTable({
-                processing: true,
-                serverSide: true,
+                //processing: true,
+               // serverSide: true,
                 'ajax': "{{ route('libros_preseleccion_dt')}}",
                 'columns': [
                     {
@@ -304,16 +305,13 @@
             var libros_preseleccion_usuarios = $('#libros_preseleccion_usuarios').DataTable({
             })
             $('.check1').on('click',function(){
-
                 if(this.checked){
-                    console.log('true1');
                     $('#rango_edades').attr('hidden',false)
                     $('#rango_generos').attr('hidden',true)
                 }
             })
             $('.check2').on('change',function(){
                 if(this.checked){
-                    console.log('true2');
                     $('#rango_edades').attr('hidden',true)
                     $('#rango_generos').attr('hidden',false)
                 }
@@ -326,13 +324,11 @@
                             id:i,
                             cupo:$(`#edad${i}`).val()
                         });
-                    console.log('ingresa',$(`#edad${i}`).val());
 
                 }
                 var formDatas = new FormData();
                 formDatas.append('objectCupos', JSON.stringify(objectCupos));
 
-                console.log(formDatas);
                 var route = '{{ route('registrar_cupos_edades_priorizacion') }}';
                 var typeAjax = 'POST';
                 var async = async || false;
@@ -349,7 +345,6 @@
 
                     },
                     success: function (response, xhr, request) {
-                        console.log(response)
                         swal({
                             title: "Buen trabajo!",
                             text: "Libros registrados!",
@@ -377,7 +372,6 @@
                             id:i,
                             cupo:$(`#genero${i}`).val()
                         });
-                    console.log('ingresa',$(`#genero${i}`).val());
 
                 }
                 var formDatas = new FormData();
@@ -398,7 +392,6 @@
 
                     },
                     success: function (response, xhr, request) {
-                        console.log(response)
                         swal({
                             title: "Buen trabajo!",
                             text: "Libros registrados!",
@@ -419,48 +412,53 @@
             })
             tablePreseleccionComiteLibros.on('click', '.checkPartial', function (e) {
                 $tr = $(this).closest('tr');
+                let dataTable = tablePreseleccionComiteLibros.row($tr).data();
+                const index = librosSeleccionados.findIndex(librosSeleccionados => librosSeleccionados.libro_id === parseInt(dataTable.libro_id));
                 if ($(this).prop("checked") == true) {
                     $('#exampleFormControlTextarea1').val('');
-                    let dataTable = tablePreseleccionComiteLibros.row($tr).data();
-                    console.log(dataTable)
+
                     objectoLibros.push(
                         {
                             id: dataTable.id,
                             libro_id:dataTable.libro_id,
                         });
-                    if(dataTable.categoria == 'Literario'){
-                        infoLiterario = parseInt(infoLiterario)
-                        infoLiterario++
-                    }else
+
+                    if( index === -1){
+                        if(dataTable.categoria == 'Literario'){
+                            infoLiterario = parseInt(infoLiterario)
+                            infoLiterario++
+                        }else
                         {
                             infoInformativo = parseInt(infoInformativo)
                             infoInformativo++
                         }
+                    }
+
 
                 } else {
-                    let dataTable = tablePreseleccionComiteLibros.row($tr).data();
 
                     objectoLibros = objectoLibros.filter(function (idLibro) {
                         return idLibro.id != dataTable.id;
                     });
-                    if(dataTable.categoria == 'Literario'){
-                        infoLiterario = parseInt(infoLiterario)
-                        infoLiterario--
-                    }else
-                    {
-                        infoInformativo = parseInt(infoInformativo)
-                        infoInformativo--
+                    if(index === -1){
+                        if(dataTable.categoria == 'Literario'){
+                            infoLiterario = parseInt(infoLiterario)
+                            infoLiterario--
+                        }else
+                        {
+                            infoInformativo = parseInt(infoInformativo)
+                            infoInformativo--
+                        }
                     }
+
                 }
 
                 $('#infoInformativos').html(`Nº libros infotmativos : ${infoInformativo}`)
                 $('#infoLiteratios').html(`Nº libros literarios : ${infoLiterario}`)
-                console.log(objectoLibros)
             });
             tableLibrosUsuarios.on('click', '.ver_libros', function (e) {
                 $tr = $(this).closest('tr');
                 let dataTable = tableLibrosUsuarios.row($tr).data();
-                console.log(dataTable)
                 let route = "{{route('libros_preseleccion_usuarios_dt')}}"+'/'+dataTable[6]
                 if($.fn.dataTable.isDataTable('#libros_preseleccion_usuarios')){
                     libros_preseleccion_usuarios.destroy();
@@ -541,7 +539,6 @@
 
                         },
                         success: function (response, xhr, request) {
-                            console.log(response)
                             swal({
                                 title: "Buen trabajo!",
                                 text: "Libros registrados!",

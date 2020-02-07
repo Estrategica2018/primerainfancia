@@ -268,7 +268,7 @@ class HomeController extends Controller
         ])->get())){
 
            $libro = LibrosPreseleccion::where('libro_id',$request->get('libro_id'))->delete();
-           
+
         }
 
     }
