@@ -274,6 +274,10 @@
             var tablePreseleccionComiteLibros = $('#example2').DataTable({
                 //processing: true,
                // serverSide: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                ],
                 'ajax': "{{ route('libros_preseleccion_dt')}}",
                 'columns': [
                     {

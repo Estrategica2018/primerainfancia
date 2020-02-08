@@ -141,7 +141,7 @@
                             <table id="example" class="mt-3 table table-striped table-bordered dt-responsive nowrap"
                                    style="width:100%">
                                 <thead>
-                                <tr>.
+                                <tr>
                                     <th>Check</th>
                                     <th width="20%">Título</th>
                                     <th>Editorial</th>
@@ -172,6 +172,10 @@
             var tablePreseleccionLibros = $('#example').DataTable({
                 //processing: true,
                 //serverSide: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                ],
                 'ajax': "{{ route('libros_dt')}}",
                 'columns': [
                     {
@@ -230,7 +234,7 @@
 
             tablePreseleccionLibros.on('click', '.checkPartial', function (e) {
                 $tr = $(this).closest('tr');
-                if ($(this).prop("checked") == true) {
+                if ($(this).prop("checked")) {
                     $('#exampleFormControlTextarea1').val('');
                     let dataTable = tablePreseleccionLibros.row($tr).data();
                     console.log(dataTable)

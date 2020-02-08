@@ -264,6 +264,15 @@
                     {data: 'genero_id', "visible": false,},
                 ]
             });
+
+            $('#example').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                    }
+                ],
+            });
             tablePreseleccionComiteLibros.on('click', '.evaluardt', function (e) {
                 $tr = $(this).closest('tr');
                 let dataTable = tablePreseleccionComiteLibros.row($tr).data();

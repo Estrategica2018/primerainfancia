@@ -283,8 +283,17 @@
             var lengGeneros ="{{count($generos)}}"
             var objectoLibros = [];
             var tablePreseleccionComiteLibros = $('#example2').DataTable({
-                processing: true,
-                serverSide: true,
+                //processing: true,
+                //serverSide: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+                        }
+                    }
+                ],
                 'ajax': "{{ route('libros_preseleccion_dt')}}",
                 'columns': [
                     {
