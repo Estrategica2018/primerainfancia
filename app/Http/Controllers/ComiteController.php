@@ -176,33 +176,37 @@ class ComiteController extends Controller
 
     public function libros_preseleccion_usuarios_dt (Request $request, $userId) {
 
-       $librosPreseleccionados =  LibrosPreseleccion::where('user_id',$userId)->get();
+       $librosPreseleccionados =  HistorialRegistrosLibros::where([
+           ['user_id',$userId],
+           ['tipo_registro_id',$userId]
+
+       ])->get();
 
         return Datatables::of($librosPreseleccionados)
 
             ->addColumn('isbn', function ($libros) {
-                return $libros->libro->isbn;
+                return $libros->libros->isbn;
             })
             ->addColumn('titulo', function ($libros) {
-                return $libros->libro->titulo;
+                return $libros->libros->titulo;
             })
             ->addColumn('autor', function ($libros) {
-                return $libros->libro->autor;
+                return $libros->libros->autor;
             })
             ->addColumn('editorial', function ($libros) {
-                return $libros->libro->editorial;
+                return $libros->libros->editorial;
             })
             ->addColumn('proveedor', function ($libros) {
-                return $libros->libro->proveedor;
+                return $libros->libros->proveedor;
             })
             ->addColumn('nivel_lectura', function ($libros) {
-                return $libros->libro->edadf->nombre;
+                return $libros->libros->edadf->nombre;
             })
             ->addColumn('genero', function ($libros) {
-                return $libros->libro->generof->nombre;
+                return $libros->libros->generof->nombre;
             })
             ->addColumn('categoria', function ($libros) {
-                return $libros->libro->categoriaf->nombre;
+                return $libros->libros->categoriaf->nombre;
             })
             ->make(true);
     }
