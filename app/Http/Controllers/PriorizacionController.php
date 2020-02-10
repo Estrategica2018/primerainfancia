@@ -19,26 +19,6 @@ class PriorizacionController extends Controller
     public function index(Request $request) {
         if($request->user()->authorizeRoles(['usuario','administrador_plataforma'])){
 
-            $generos = Generos::all();
-            $edadeslecturas = EdadLectura::all();
-            $registroPriorizacion = false;
-            $tipoPriorizacion = "";
-            $disabled = "";
-            $hiddenEdad = "hidden";
-            $hiddenGenero = "hidden";
-            if(count(EdadLecturaPrioriza::all())){
-                $registroPriorizacion = true;
-                $tipoPriorizacion = "rango_edad";
-                $disabled = "disabled";
-                $hiddenEdad = "";
-            }else{
-                if(count(GeneroPrioriza::all())){
-                    $registroPriorizacion = true;
-                    $tipoPriorizacion = "genero";
-                    $disabled = "disabled";
-                    $hiddenGenero = "";
-                }
-            }
             $libros = HistorialRegistrosLibros::where([
                 ['tipo_registro_id', '=', 4],
                 ['user_id', '=', auth()->user()->id]
@@ -47,13 +27,6 @@ class PriorizacionController extends Controller
                 $libros = [];
             }
             return view('priorizacion')
-                ->with('generos',$generos)
-                ->with('registroPriorizacion',$registroPriorizacion)
-                ->with('edadeslecturas',$edadeslecturas)
-                ->with('tipoPriorizacion',$tipoPriorizacion)
-                ->with('hiddenEdad',$hiddenEdad)
-                ->with('hiddenGenero',$hiddenGenero)
-                ->with('disabled',$disabled)
                 ->with('libros',$libros);
         }
     }

@@ -215,8 +215,16 @@
 
             } );
             var tableListaPreseleccionLibros = $('#example2').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                ],
             });
             var tableRegistroPreseleccionLibros = $('#example3').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                ],
             });
 
 
@@ -350,6 +358,10 @@
             })
             $('#exampleModalCenter3').on('shown.bs.modal', function() {
                 tableRegistroPreseleccionLibros = $('#example3').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'excelHtml5',
+                    ],
                 })
             });
             tableRegistroPreseleccionLibros.on('click', '.eliminar', function (e) {

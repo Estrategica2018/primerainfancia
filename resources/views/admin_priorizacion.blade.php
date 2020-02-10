@@ -97,7 +97,7 @@
         <hr>
         <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12" >
             <br><br>
-            <div class="row">
+            <div class="row" hidden>
                 <div class="col-md-2">
                     <form class="was-validated">
                         <div class="custom-control custom-radio">

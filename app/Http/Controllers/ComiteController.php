@@ -22,29 +22,6 @@ class ComiteController extends Controller
     public function index(Request $request){
         if($request->user()->authorizeRoles(['comite_educativo','administrador_plataforma'])){
 
-            $usuarios = User::Has('libros_preseleccion')->get();
-            $generos = Generos::all();
-            $edadeslecturas = EdadLectura::all();
-            $registroPriorizacion = false;
-            $tipoPriorizacion = "";
-            $disabled = "";
-            $hiddenEdad = "";
-            $hiddenGenero = "hidden";
-            if(count(EdadLecturaPrioriza::all())){
-                $registroPriorizacion = true;
-                $tipoPriorizacion = "rango_edad";
-                $disabled = "disabled";
-                $hiddenEdad = "";
-            }else{
-                if(count(GeneroPrioriza::all())){
-                    $registroPriorizacion = true;
-                    $tipoPriorizacion = "rango_genero";
-                    $disabled = "disabled";
-                    $hiddenGenero = "";
-                    $hiddenEdad = "hidden";
-                }
-            }
-
             $libros = HistorialRegistrosLibros::where([
                 ['tipo_registro_id', '=', 2],
                 ['user_id', '=', auth()->user()->id]
@@ -63,14 +40,6 @@ class ComiteController extends Controller
                 }
             }
             return view('comite')
-                ->with('generos',$generos)
-                ->with('registroPriorizacion',$registroPriorizacion)
-                ->with('edadeslecturas',$edadeslecturas)
-                ->with('tipoPriorizacion',$tipoPriorizacion)
-                ->with('hiddenEdad',$hiddenEdad)
-                ->with('hiddenGenero',$hiddenGenero)
-                ->with('disabled',$disabled)
-                ->with('usuarios',$usuarios)
                 ->with('libros',$libros)
                 ->with('librosInformativos',$librosInformativos)
                 ->with('librosLiterarios',$librosLiteraios);

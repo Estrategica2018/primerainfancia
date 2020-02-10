@@ -49,69 +49,40 @@ class HomeController extends Controller
         }
         if($request->user()->authorizeRoles(['comite_educativo'])){
 
-            $usuarios = User::Has('libros_preseleccion')->get();
-            $generos = Generos::all();
-            $edadeslecturas = EdadLectura::all();
-            $registroPriorizacion = false;
-            $tipoPriorizacion = "";
-            $disabled = "";
-            $hiddenEdad = "";
-            $hiddenGenero = "hidden";
-            if(count(EdadLecturaPrioriza::all())){
-                $registroPriorizacion = true;
-                $tipoPriorizacion = "rango_edad";
-                $disabled = "disabled";
-                $hiddenEdad = "";
+            $libros = HistorialRegistrosLibros::where([
+                ['tipo_registro_id', '=', 2],
+                ['user_id', '=', auth()->user()->id]
+            ])->get();
+            $librosLiteraios = 0;
+            $librosInformativos = 0;
+            if($libros===null){
+                $libros = [];
             }else{
-                if(count(GeneroPrioriza::all())){
-                    $registroPriorizacion = true;
-                    $tipoPriorizacion = "rango_genero";
-                    $disabled = "disabled";
-                    $hiddenGenero = "";
-                    $hiddenEdad = "hidden";
+                foreach($libros as $li){
+                    if($li->libros->categoriaf->id == 1){
+                        $librosInformativos++;
+                    }else{
+                        $librosLiteraios++;
+                    }
                 }
             }
-
             return view('comite')
-                ->with('generos',$generos)
-                ->with('registroPriorizacion',$registroPriorizacion)
-                ->with('edadeslecturas',$edadeslecturas)
-                ->with('tipoPriorizacion',$tipoPriorizacion)
-                ->with('hiddenEdad',$hiddenEdad)
-                ->with('hiddenGenero',$hiddenGenero)
-                ->with('disabled',$disabled)
-                ->with('usuarios',$usuarios);
+                ->with('libros',$libros)
+                ->with('librosInformativos',$librosInformativos)
+                ->with('librosLiterarios',$librosLiteraios);
         }
         if($request->user()->authorizeRoles(['usuario'])){
 
-            $generos = Generos::all();
-            $edadeslecturas = EdadLectura::all();
-            $registroPriorizacion = false;
-            $tipoPriorizacion = "";
-            $disabled = "";
-            $hiddenEdad = "hidden";
-            $hiddenGenero = "hidden";
-            if(count(EdadLecturaPrioriza::all())){
-                $registroPriorizacion = true;
-                $tipoPriorizacion = "rango_edad";
-                $disabled = "disabled";
-                $hiddenEdad = "";
-            }else{
-                if(count(GeneroPrioriza::all())){
-                    $registroPriorizacion = true;
-                    $tipoPriorizacion = "genero";
-                    $disabled = "disabled";
-                    $hiddenGenero = "";
-                }
+
+            $libros = HistorialRegistrosLibros::where([
+                ['tipo_registro_id', '=', 4],
+                ['user_id', '=', auth()->user()->id]
+            ])->get();
+            if($libros===null){
+                $libros = [];
             }
             return view('priorizacion')
-                ->with('generos',$generos)
-                ->with('registroPriorizacion',$registroPriorizacion)
-                ->with('edadeslecturas',$edadeslecturas)
-                ->with('tipoPriorizacion',$tipoPriorizacion)
-                ->with('hiddenEdad',$hiddenEdad)
-                ->with('hiddenGenero',$hiddenGenero)
-                ->with('disabled',$disabled);
+                ->with('libros',$libros);
         }
 
     }
