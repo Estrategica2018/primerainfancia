@@ -73,7 +73,6 @@ class HomeController extends Controller
         }
         if($request->user()->authorizeRoles(['usuario'])){
 
-
             $libros = HistorialRegistrosLibros::where([
                 ['tipo_registro_id', '=', 4],
                 ['user_id', '=', auth()->user()->id]

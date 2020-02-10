@@ -166,16 +166,16 @@ class AdministradorController extends Controller
         //$informativo = 0;
         //$literario = 0;
 
-        $informativoPorcentaje = (count(HistorialRegistrosLibros::whereHas('libros',function ($query){
+        $informativoPorcentaje = count(HistorialRegistrosLibros::whereHas('libros',function ($query){
             return $query->where('categoria',1);
         })->where([
             ['tipo_registro_id', '=', 3],
-        ])->get()) / 220) * 100;
-        $literarioPorcentaje = (count(HistorialRegistrosLibros::whereHas('libros',function ($query){
+        ])->get()); /// 220) * 100;
+        $literarioPorcentaje = count(HistorialRegistrosLibros::whereHas('libros',function ($query){
             return $query->where('categoria',2);
         })->where([
             ['tipo_registro_id', '=', 3],
-        ])->get()) / 220) *100;
+        ])->get());// / 220) *100;
 
         //dd($informativoPorcentaje,$literarioPorcentaje);
 

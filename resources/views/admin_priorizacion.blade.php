@@ -94,9 +94,7 @@
         <div class="mt-3 col-sm-12 col-md-12 col-lg-12">
             <h3>Administrador gestión priorización</h3>
         </div>
-        <hr>
         <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12" >
-            <br><br>
             <div class="row" hidden>
                 <div class="col-md-2">
                     <form class="was-validated">
@@ -180,9 +178,9 @@
 
                 </div>
             </div>
-            <hr>
             <div class="row">
                 <div class="col-md-12">
+                    <br>
                     <form action="javascript:void(0);" class="was-validated" id="" >
                             <h4>Porcentaje colección</h4>
                             <div class="form-row">
@@ -457,11 +455,11 @@
                         });
                     if(dataTable.categoria_id == 1){
                         informativoPorcentaje = parseFloat(informativoPorcentaje)
-                        informativoPorcentaje  += (0.0045454545454545*100);
+                        informativoPorcentaje  += 1//(0.0045454545454545*100);
                     }else{
                         literarioPorcentaje = parseFloat(literarioPorcentaje)
                         console.log(literarioPorcentaje,'resultadi0')
-                        literarioPorcentaje  += (0.0045454545454545*100);
+                        literarioPorcentaje  += 1//(0.0045454545454545*100);
                         console.log(literarioPorcentaje,'resultadi2')
                     }
                     $('#informativo').val(informativoPorcentaje)
@@ -474,10 +472,10 @@
                     });
                     if(dataTable.categoria_id == 1){
                         informativoPorcentaje = parseFloat(informativoPorcentaje)
-                        informativoPorcentaje  -= (0.0045454545454545*100);
+                        informativoPorcentaje  -= 1 //(0.0045454545454545*100);
                     }else{
                         literarioPorcentaje = parseFloat(literarioPorcentaje)
-                        literarioPorcentaje  -= (0.0045454545454545*100);
+                        literarioPorcentaje  -= 1 //(0.0045454545454545*100);
                     }
                     $('#informativo').val(informativoPorcentaje)
                     $('#literario').val(literarioPorcentaje)
