@@ -205,7 +205,6 @@
                     selector: 'td:first-child'
                 }
             });
-
             $('#example thead th').each( function (index,value) {
                 console.log(index,value)
                 if(index == 3 || index == 4 || index == 5 ){
@@ -213,7 +212,7 @@
                     $(this).html($(this).text()+'<br><input type="text" placeholder="Buscar '+title+'" />' );
                 }
 
-            } );
+            });
             var tableListaPreseleccionLibros = $('#example2').DataTable({
                 dom: 'Bfrtip',
                 buttons: [

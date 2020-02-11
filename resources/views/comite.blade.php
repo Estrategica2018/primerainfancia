@@ -182,6 +182,16 @@
                     selector: 'td:first-child'
                 }
             });
+
+            $('#example2 thead th').each( function (index,value) {
+                console.log(index,value)
+                if(index == 3 || index == 4 || index == 5 ){
+                    var title = $(this).text();
+                    $(this).html($(this).text()+'<br><input type="text" placeholder="Buscar '+title+'" />' );
+                }
+
+            });
+
             var tableLibrosSeleccionados = $('#example').DataTable({
             })
             var tableLibrosUsuarios = $('#example3').DataTable({

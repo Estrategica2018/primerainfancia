@@ -164,6 +164,15 @@
                 ]
             });
 
+            $('#example2 thead th').each( function (index,value) {
+                console.log(index,value)
+                if(index == 2 || index == 3 || index == 4 ){
+                    var title = $(this).text();
+                    $(this).html($(this).text()+'<br><input type="text" placeholder="Buscar '+title+'" />' );
+                }
+
+            });
+
             $('#example').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
