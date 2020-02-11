@@ -222,7 +222,42 @@ class AdministradorController extends Controller
             }
         }
 
+    }
 
+    public function historial_libros_usuario_dt ($userId,$tipoRegistro) {
+
+        $libros = HistorialRegistrosLibros::where([
+            ['user_id',$userId],
+            ['tipo_registro_id',$tipoRegistro],
+        ])->get();
+
+        return Datatables::of($libros)
+
+            ->addColumn('isbn', function ($libros) {
+                return $libros->libros->isbn;
+            })
+            ->addColumn('titulo', function ($libros) {
+                return $libros->libros->titulo;
+            })
+            ->addColumn('autor', function ($libros) {
+                return $libros->libros->autor;
+            })
+            ->addColumn('editorial', function ($libros) {
+                return $libros->libros->editorial;
+            })
+            ->addColumn('proveedor', function ($libros) {
+                return $libros->libros->proveedor;
+            })
+            ->addColumn('nivel_lectura', function ($libros) {
+                return $libros->libros->edadf->nombre;
+            })
+            ->addColumn('genero', function ($libros) {
+                return $libros->libros->generof->nombre;
+            })
+            ->addColumn('categoria', function ($libros) {
+                return $libros->libros->categoriaf->nombre;
+            })
+            ->make(true);
 
     }
 }

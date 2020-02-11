@@ -56,3 +56,6 @@ Route::post('registrar_libros_administrador_para_priorizacion', 'AdministradorCo
 
 Route::post('elminar_libro_preseleccion', 'HomeController@elminar_libro_preseleccion')->name('elminar_libro_preseleccion');
 
+
+Route::get('/historial_libros_usuario_dt/{userId?}/{tipoRegistro?}', 'AdministradorController@historial_libros_usuario_dt')->name('historial_libros_usuario_dt');
+
