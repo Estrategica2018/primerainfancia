@@ -44,7 +44,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Libros registrados</h5>
+                    <h5 class="modal-title" id="">Libros registrados</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -291,6 +291,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(document).ready(function() {
+            var globalDatable,tipoRegistro;
             var literarioPorcentaje = "{{$literarioPorcentaje}}"
             var informativoPorcentaje = "{{$informativoPorcentaje}}"
             var lengEdadLectura ="{{count($edadeslecturas)}}"
@@ -347,14 +348,12 @@
             $('.check1').on('click',function(){
 
                 if(this.checked){
-                    console.log('true1');
                     $('#rango_edades').attr('hidden',false)
                     $('#rango_generos').attr('hidden',true)
                 }
             })
             $('.check2').on('change',function(){
                 if(this.checked){
-                    console.log('true2');
                     $('#rango_edades').attr('hidden',true)
                     $('#rango_generos').attr('hidden',false)
                 }
@@ -367,13 +366,10 @@
                             id:i,
                             cupo:$(`#edad${i}`).val()
                         });
-                    console.log('ingresa',$(`#edad${i}`).val());
 
                 }
                 var formDatas = new FormData();
                 formDatas.append('objectCupos', JSON.stringify(objectCupos));
-
-                console.log(formDatas);
                 var route = '{{ route('registrar_cupos_edades_priorizacion') }}';
                 var typeAjax = 'POST';
                 var async = async || false;
@@ -390,7 +386,6 @@
 
                     },
                     success: function (response, xhr, request) {
-                        console.log(response)
                         swal({
                             title: "Buen trabajo!",
                             text: "Libros registrados!",
@@ -418,7 +413,6 @@
                             id:i,
                             cupo:$(`#genero${i}`).val()
                         });
-                    console.log('ingresa',$(`#genero${i}`).val());
 
                 }
                 var formDatas = new FormData();
@@ -439,7 +433,6 @@
 
                     },
                     success: function (response, xhr, request) {
-                        console.log(response)
                         swal({
                             title: "Buen trabajo!",
                             text: "Libros registrados!",
@@ -463,7 +456,6 @@
                 if ($(this).prop("checked") == true) {
                     $('#exampleFormControlTextarea1').val('');
                     let dataTable = tablePreseleccionComiteLibros.row($tr).data();
-                    console.log(dataTable)
                     objectoLibros.push(
                         {
                             id: dataTable.id,
@@ -474,9 +466,7 @@
                         informativoPorcentaje  += 1//(0.0045454545454545*100);
                     }else{
                         literarioPorcentaje = parseFloat(literarioPorcentaje)
-                        console.log(literarioPorcentaje,'resultadi0')
                         literarioPorcentaje  += 1//(0.0045454545454545*100);
-                        console.log(literarioPorcentaje,'resultadi2')
                     }
                     $('#informativo').val(informativoPorcentaje)
                     $('#literario').val(literarioPorcentaje)
@@ -496,22 +486,54 @@
                     $('#informativo').val(informativoPorcentaje)
                     $('#literario').val(literarioPorcentaje)
                 }
-                console.log(objectoLibros)
             });
             tableLibrosUsuarios.on('click', '.proceso', function (e) {
-                //console.log(dataTable)
-                //$tr = $(this).closest('tr');
-                //let dataTable = tableLibrosUsuarios.row($tr).data();
-                //console.log(dataTable,$(this).data('tipo'),'alsdasld')
 
                 $tr = $(this).closest('tr');
                 let dataTable = tableLibrosUsuarios.row($tr).data();
-                console.log(dataTable)
-                let route = "{{route('historial_libros_usuario_dt')}}"+'/'+dataTable[6]+'/'+$(this).data('tipo')
+                tipoRegistro = $(this).data('tipo')
+                globalDatable = dataTable;
+                switch ($(this).data('tipo')) {
+                    case 1:
+                        $('#exampleModalCenterTitle').html('Libros preseleccionados')
+                        globalDatable[5]= "Preselección"
+                    break;
+                    case 2:
+                        $('#exampleModalCenterTitle').html('Libros seleccionados en comite')
+                        globalDatable[5]= "Comite"
+                    break;
+                    case 4:
+                        $('#exampleModalCenterTitle').html('Libros evaluados en priorización')
+                        globalDatable[5]= "Priorización"
+                    break;
+
+                }
+
+                $('#exampleModalCenter2').modal('show')
+            });
+
+            $('#exampleModalCenter2').on('shown.bs.modal', function() {
+
+                let route = "{{route('historial_libros_usuario_dt')}}"+'/'+globalDatable[6]+'/'+tipoRegistro
                 if($.fn.dataTable.isDataTable('#libros_preseleccion_usuarios')){
                     libros_preseleccion_usuarios.destroy();
                     libros_preseleccion_usuarios = $('#libros_preseleccion_usuarios').DataTable({
-                        serverSide: true,
+                        //serverSide: true,
+                        dom: 'Bfrtip',
+                        buttons: [
+                            {
+                                extend: 'excel',
+                                text: 'Exportar a excel',
+                                filename: function(){
+                                    return `${globalDatable[5]} ${globalDatable[0]} - ${globalDatable[1]}`
+
+                                },
+                                title:function(){
+                                    return globalDatable[5]+' '+globalDatable[0]+' - '+globalDatable[1]
+                                },
+
+                            }
+                        ],
                         ajax: route,
                         columns: [
                             {data: 'titulo', "width": "20%"},
@@ -526,14 +548,6 @@
                         ]
                     })
                 }
-                $('#exampleModalCenter2').modal('show')
-            });
-
-            $('#exampleModalCenter2').on('shown.bs.modal', function() {
-                /*
-                libros_preseleccion_usuarios.destroy();
-                libros_preseleccion_usuarios = $('#libros_preseleccion_usuarios').DataTable({
-                })*/
             });
 
             $('#registrar').on('click', function () {
@@ -563,7 +577,6 @@
 
                         },
                         success: function (response, xhr, request) {
-                            console.log(response)
                             swal({
                                 title: "Buen trabajo!",
                                 text: "Libros registrados!",

@@ -113,8 +113,10 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
 
+                <ul class="navbar-nav ml-auto">
+                    <h3 style="color: #146BC9; font-family: Helvetica; font-weight:700"
+                    >Herramienta de selección y priorización para la conformación de colecciones según metodología MinCultura</h3>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
