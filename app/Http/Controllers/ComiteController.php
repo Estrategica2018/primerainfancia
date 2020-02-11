@@ -147,10 +147,10 @@ class ComiteController extends Controller
 
        $librosPreseleccionados =  HistorialRegistrosLibros::where([
            ['user_id',$userId],
-           ['tipo_registro_id',$userId]
+           ['tipo_registro_id',1]
 
        ])->get();
-
+//dd($librosPreseleccionados);
         return Datatables::of($librosPreseleccionados)
 
             ->addColumn('isbn', function ($libros) {

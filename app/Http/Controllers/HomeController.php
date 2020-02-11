@@ -42,7 +42,7 @@ class HomeController extends Controller
             if($libros===null){
                 $libros = [];
             }else{
-                $libros = $libros->usuario_libros_registrados_preseleccion->where('tipo_registro_id',1)->where('user_id',1);
+                $libros = $libros->usuario_libros_registrados_preseleccion->where('tipo_registro_id',1)->where('user_id',auth()->user()->id);
             }
             //dd($libros);
             return view('home')->with('libros',$libros);
