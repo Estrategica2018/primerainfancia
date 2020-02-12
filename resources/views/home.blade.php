@@ -174,7 +174,20 @@
                 //serverSide: true,
                 dom: 'Bfrtip',
                 buttons: [
-                    'excelHtml5',
+                    {
+                        extend: 'excel',
+                        text: 'Exportar a excel',
+                        filename: function(){
+                            return `listado de libros`
+
+                        },
+                        title:function(){
+                            return 'listado de libros'
+                        },
+                        exportOptions: {
+                            columns: [ 1, 2, 3, 4, 5, 6, 7 ]
+                        }
+                    }
                 ],
                 'ajax': "{{ route('libros_dt')}}",
                 'columns': [
@@ -222,7 +235,18 @@
             var tableRegistroPreseleccionLibros = $('#example3').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'excelHtml5',
+                    {
+                        extend: 'excel',
+                        text: 'Exportar a excel',
+                        filename: function(){
+                            return `Registro individual de preseleccion`
+
+                        },
+                        title:function(){
+                            return 'listado de libros enviados a comite'
+                        },
+
+                    }
                 ],
             });
 
@@ -359,7 +383,21 @@
                 tableRegistroPreseleccionLibros = $('#example3').DataTable({
                     dom: 'Bfrtip',
                     buttons: [
-                        'excelHtml5',
+                        {
+                            extend: 'excel',
+                            text: 'Exportar a excel',
+                            filename: function(){
+                                return `Registro individual de preseleccion`
+
+                            },
+                            title:function(){
+                                return 'listado de libros enviados a comite'
+                            },
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                            }
+
+                        }
                     ],
                 })
             });
