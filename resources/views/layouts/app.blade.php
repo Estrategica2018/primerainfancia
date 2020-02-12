@@ -62,7 +62,7 @@
 
 </head>
 <style>
-    /*
+
     .py-4 {
         padding-top: 0.5rem!important;
     }
@@ -93,7 +93,7 @@
         font-size: 0.7rem;
         font-weight: 400;
     }
-*/
+
 </style>
 <body>
 <div id="app">
