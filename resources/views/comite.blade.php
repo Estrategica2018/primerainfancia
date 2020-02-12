@@ -1,44 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Modal table -->
-    <div class="modal fade bd-example-modal-xl" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Libros preseleccionados</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table id="libros_preseleccion_usuarios" class="mt-3 table table-striped table-bordered dt-responsive nowrap"
-                               style="width:100%">
-                            <thead>
-                            <tr>
-                                <th width="20%">Título</th>
-                                <th>Editorial</th>
-                                <th>Nivel de lectura</th>
-                                <th>Género</th>
-                                <th>Categoria</th>
-                                <th>Distribuidor</th>
-                                <th>Autor</th>
-                                <th>ISBN</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Modal table libros registrados -->
     <div class="modal fade bd-example-modal-xl" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -149,7 +112,20 @@
                // serverSide: true,
                 dom: 'Bfrtip',
                 buttons: [
-                    'excelHtml5',
+                    {
+                        extend: 'excel',
+                        text: 'Exportar a excel',
+                        filename: function(){
+                            return `listado de libros en comite`
+
+                        },
+                        title:function(){
+                            return 'listado de libros en comite'
+                        },
+                        exportOptions: {
+                            columns: [ 1, 2, 3, 4, 5, 6, 8, 9, 10 ]
+                        }
+                    }
                 ],
                 'ajax': "{{ route('libros_preseleccion_dt')}}",
                 'columns': [
@@ -193,23 +169,25 @@
             });
 
             var tableLibrosSeleccionados = $('#example').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        text: 'Exportar a excel',
+                        filename: function(){
+                            return `Registro individual de comite`
+
+                        },
+                        title:function(){
+                            return 'listado de libros seleccionados en comite'
+                        },
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                        }
+                    }
+                ],
             })
-            var tableLibrosUsuarios = $('#example3').DataTable({
-            })
-            var libros_preseleccion_usuarios = $('#libros_preseleccion_usuarios').DataTable({
-            })
-            $('.check1').on('click',function(){
-                if(this.checked){
-                    $('#rango_edades').attr('hidden',false)
-                    $('#rango_generos').attr('hidden',true)
-                }
-            })
-            $('.check2').on('change',function(){
-                if(this.checked){
-                    $('#rango_edades').attr('hidden',true)
-                    $('#rango_generos').attr('hidden',false)
-                }
-            })
+
 
             tablePreseleccionComiteLibros.on('click', '.checkPartial', function (e) {
                 $tr = $(this).closest('tr');
@@ -256,61 +234,6 @@
 
                 $('#infoInformativos').html(`Nº libros infotmativos : ${infoInformativo}`)
                 $('#infoLiteratios').html(`Nº libros literarios : ${infoLiterario}`)
-            });
-            tableLibrosUsuarios.on('click', '.ver_libros', function (e) {
-                $tr = $(this).closest('tr');
-                let dataTable = tableLibrosUsuarios.row($tr).data();
-                let route = "{{route('libros_preseleccion_usuarios_dt')}}"+'/'+dataTable[6]
-                if($.fn.dataTable.isDataTable('#libros_preseleccion_usuarios')){
-                    libros_preseleccion_usuarios.destroy();
-                    libros_preseleccion_usuarios = $('#libros_preseleccion_usuarios').DataTable({
-                        responsive: true,
-                        processing: true,
-                        serverSide: true,
-                        fixedHeader: true,
-                        ajax: route,
-                        order: [],
-                        language: {
-                            "decimal": "",
-                            "emptyTable": "No hay información",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                            "infoPostFix": "",
-                            "thousands": ",",
-                            "lengthMenu": "Mostrar _MENU_ Entradas",
-                            "loadingRecords": "Cargando...",
-                            "processing": "Procesando...",
-                            "search": "Buscar:",
-                            "zeroRecords": "Sin resultados encontrados",
-                            "paginate": {
-                                "first": "Primeros",
-                                "last": "Ultimo",
-                                "next": "Siguiente",
-                                "previous": "Anterior"
-                            }
-                        },
-                        columns: [
-                            {data: 'titulo', "width": "20%"},
-                            {data: 'editorial', className: 'text-center'},
-                            {data: 'nivel_lectura', className: 'text-center'},
-                            {data: 'genero', className: 'text-center'},
-                            {data: 'categoria', className: 'text-center'},
-                            {data: 'proveedor', className: 'text-center'},
-                            {data: 'autor', className: 'text-center'},
-                            {data: 'isbn', className: 'text-center'},
-
-                        ]
-                    })
-                }
-
-                $('#exampleModalCenter2').modal('show')
-            });
-
-            $('#exampleModalCenter2').on('shown.bs.modal', function() {
-                libros_preseleccion_usuarios.destroy();
-                libros_preseleccion_usuarios = $('#libros_preseleccion_usuarios').DataTable({
-                })
             });
 
             $('#registrar').on('click', function () {
