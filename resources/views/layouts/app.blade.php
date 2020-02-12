@@ -119,7 +119,7 @@
 
                 <ul class="navbar-nav ml-auto">
                     <h3 style="color: #146BC9; font-family: Helvetica; font-weight:700"
-                    >Herramienta de selección y priorización para la conformación de colecciones según metodología MinCultura</h3>
+                    >Herramienta de selección y priorización para la conformación de colecciones de tipo literario e informativo</h3>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
