@@ -108,8 +108,8 @@
         <hr>
         <div class="border-top my-3 col-sm-12 col-md-12 col-lg-12" >
             <br>
-            <button class="btn btn-primary" id="finalizar_registro">Finalizar registro de priorización</button>
-            <button class="btn btn-warning" id="ver">ver libros priorizados</button>
+            <button class="btn btn-primary btn-sm" id="finalizar_registro">Finalizar registro de priorización</button>
+            <button class="btn btn-warning btn-sm" id="ver">ver libros priorizados</button>
             <br><br>
             <!--table table-striped table-bordered dt-responsive nowrap-->
             <table id="example2" class="table table-striped table-bordered dt-responsive nowrap"

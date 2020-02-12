@@ -101,14 +101,14 @@
             <hr>
             <div class="row">
                 <div class="col-md-3">
-                    <button class="btn btn-success" id="registrar">Registrar libros</button>
-                    <button class="btn btn-warning" id="ver">Ver libros seleccionados</button>
+                    <button class="btn btn-success btn-sm" id="registrar">Registrar libros</button>
+                    <button class="btn btn-warning btn-sm" id="ver">Ver libros seleccionados</button>
                 </div>
                 <div class="col-md-4">
-                    <h4 id="infoLiteratios">Nº libros literarios : {{$librosLiterarios}} </h4>
+                    <h5 id="infoLiteratios">Nº libros literarios : {{$librosLiterarios}} </h5>
                 </div>
                 <div class="col-md-4">
-                    <h4 id="infoInformativos">Nº de libros informativos :{{$librosInformativos}}</h4>
+                    <h5 id="infoInformativos">Nº de libros informativos :{{$librosInformativos}}</h5>
                 </div>
             </div>
             <br><br>

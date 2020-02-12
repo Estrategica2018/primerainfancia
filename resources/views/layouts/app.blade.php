@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Estratégica') }}</title>
+    <title>Bibloamigos</title>
 
 <!-- Scripts
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -92,6 +92,9 @@
 
         font-size: 0.7rem;
         font-weight: 400;
+    }
+    .dropdown-menu {
+        font-size: 0.7rem;
     }
 
 </style>
@@ -208,10 +211,10 @@
 <footer class="bd-footer text-muted bg-primary text-white-50 container-fluid" style="max-width: 98%;">
     <div class=" text-center">
         <div>
-            <img class="mt-2" src="{{url('/imagenes/logo.png')}}" data-retina_w="759" data-retina_h="239" style="height: 30px;">
+            <img class="mt-2" src="{{url('/imagenes/logo.png')}}" data-retina_w="759" data-retina_h="239" style="height: 22px;">
         </div>
         <div class="">
-            <a class="navbar-brand" href="https://www.estrategicacomunicaciones.com">
+            <a class="navbar-brand" href="https://www.estrategicacomunicaciones.com" style="font-size: 1rem;">
 
                 <small style="color: white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copyright © Estratégica Comunicaciones
                     https://www.estrategicacomunicaciones.com
