@@ -128,10 +128,19 @@
                 dom: 'Bfrtip',
                 buttons: [
                     {
-                        extend: 'excelHtml5',
+                        extend: 'excel',
+                        text: 'Exportar a excel',
+                        filename: function(){
+                            return `Resultado logistica de priorización`
+
+                        },
+                        title:function(){
+                            return 'Resultado logistica de priorización'
+                        },
                         exportOptions: {
-                            //columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
                         }
+
                     }
                 ],
             });

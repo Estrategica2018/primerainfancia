@@ -72,16 +72,16 @@
                                     <td>{{$libroU->libros->categoriaf->nombre}}</td>
                                     @switch ($libroU->priorizacion)
                                         @case('10')
-                                            <td><h5><span class="badge badge-success">Muy Alta</span></h5></td>
+                                            <td><h6><span class="badge badge-success">Muy Alta</span></h6></td>
                                         @break
                                         @case('8')
-                                            <td><h5><span class="badge badge-warning">Alta</span></h5></td>
+                                            <td><h6><span class="badge badge-warning">Alta</span></h6></td>
                                         @break
                                         @case('6')
-                                            <td><h5><span class="badge badge-primary">Media</span></h5></td>
+                                            <td><h6><span class="badge badge-primary">Media</span></h6></td>
                                         @break
                                         @case('4')
-                                            <td><h5><span class="badge badge-danger">Baja</span></h5></td>
+                                            <td><h6><span class="badge badge-danger">Baja</span></h6></td>
                                         @break
                                     @endswitch
                                     <td>{{$libroU->libros->proveedor}}</td>
@@ -145,6 +145,24 @@
             var objectCuposPriorizacion = [];
             var objectLibrosPriorizacion = [];
             var tablePreseleccionComiteLibros = $('#example2').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        text: 'Exportar a excel',
+                        filename: function(){
+                            return `Listado de libros en priorización`
+
+                        },
+                        title:function(){
+                            return 'Listado de libros en priorización'
+                        },
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 7, 8, 9 ]
+                        }
+
+                    }
+                ],
                 "processing": true,
                 "serverSide": false,
                 'ajax': "{{ route('libros_priorizacion_dt')}}",
@@ -177,7 +195,19 @@
                 dom: 'Bfrtip',
                 buttons: [
                     {
-                        extend: 'excelHtml5',
+                        extend: 'excel',
+                        text: 'Exportar a excel',
+                        filename: function(){
+                            return `Listado individual de libros evaluados`
+
+                        },
+                        title:function(){
+                            return 'Listado individual de libros evaluados'
+                        },
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+                        }
+
                     }
                 ],
             });
