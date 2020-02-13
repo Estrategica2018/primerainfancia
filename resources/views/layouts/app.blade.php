@@ -103,7 +103,7 @@
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container" style="display: contents;">
             <a class="navbar-brand" href="{{ url('/') }}">
-                <img src="{{url('imagenes/logo_biblioamigos.png')}}"
+                <img src="{{asset('imagenes/logo_biblioamigos.png')}}"
                      alt="Estratégica Comunicaciones"
                      data-retina="https://www.estrategicacomunicaciones.com/wp-content/uploads/2016/01/logo-estrategica-grand.png"
                      data-retina_w="759" data-retina_h="239" style="height: 150px;">
@@ -211,7 +211,7 @@
 <footer class="bd-footer text-muted bg-primary text-white-50 container-fluid" style="max-width: 98%;">
     <div class=" text-center">
         <div>
-            <img class="mt-2" src="{{url('/imagenes/logo.png')}}" data-retina_w="759" data-retina_h="239" style="height: 22px;">
+            <img class="mt-2" src="{{asset('/imagenes/logo.png')}}" data-retina_w="759" data-retina_h="239" style="height: 22px;">
         </div>
         <div class="">
             <a class="navbar-brand" href="https://www.estrategicacomunicaciones.com" style="font-size: 1rem;">
