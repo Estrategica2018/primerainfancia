@@ -132,7 +132,7 @@ class AdministradorController extends Controller
 
     public function index_priorizacion(){
 
-        $usuarios = User::Has('libros_preseleccion')->get();
+        $usuarios = User::all();
         $generos = Generos::all();
         $edadeslecturas = EdadLectura::all();
         $registroPriorizacion = false;
