@@ -28,7 +28,7 @@ Route::group(['middleware' => ['auth']],function (){
     Route::post('registrar_libros_administrador_para_priorizacion', 'AdministradorController@registrar_libros_administrador_para_priorizacion')->name('registrar_libros_administrador_para_priorizacion');
     Route::get('/historial_libros_usuario_dt/{userId?}/{tipoRegistro?}', 'AdministradorController@historial_libros_usuario_dt')->name('historial_libros_usuario_dt');
 
-    
+
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('libros_dt', 'HomeController@libros_dt')->name('libros_dt');
@@ -50,6 +50,8 @@ Route::group(['middleware' => ['auth']],function (){
     Route::get('consultar_cupos_priorizacion/{tipo}', 'PriorizacionController@consultar_cupos_priorizacion')->name('consultar_cupos_priorizacion');
     Route::post('registrar_calificacion_priorizacion', 'PriorizacionController@registrar_calificacion_priorizacion')->name('registrar_calificacion_priorizacion');
     Route::get('resultado_libros_logistica_priorizacion_dt', 'PriorizacionController@resultado_libros_logistica_priorizacion_dt')->name('resultado_libros_logistica_priorizacion_dt');
+
+    Route::post('eliminar_libro_priorizacion', 'AdministradorController@eliminar_libro_priorizacion')->name('eliminar_libro_priorizacion');
 
 
 });

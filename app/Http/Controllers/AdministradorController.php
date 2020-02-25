@@ -155,10 +155,7 @@ class AdministradorController extends Controller
             }
         }
 
-        $libros = HistorialRegistrosLibros::where([
-            ['tipo_registro_id', '=', 2],
-            ['user_id', '=', auth()->user()->id]
-        ])->get();
+        $libros = LibrosPriorizacion::all();
         if($libros===null){
             $libros = [];
         }
@@ -258,6 +255,24 @@ class AdministradorController extends Controller
                 return $libros->libros->categoriaf->nombre;
             })
             ->make(true);
+
+    }
+
+    public function eliminar_libro_priorizacion (Request $request) {
+
+        $libro = LibrosPriorizacion::where('id',$request->get('id'))->first();
+
+
+        HistorialRegistrosLibros::where([
+            ['libro_id',$libro->libro_id],
+            ['tipo_registro_id',3]
+        ])->delete();
+        $libro->delete();
+
+        return response()->json(
+            'Libro eliminado correctamente',
+            200
+        );
 
     }
 }

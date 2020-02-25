@@ -63,19 +63,21 @@
                                 <th>Distribuidor</th>
                                 <th>Autor</th>
                                 <th>ISBN</th>
+                                <th>Accion</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($libros as $libroU)
                                 <tr>
-                                    <td>{{$libroU->libros->titulo}}</td>
-                                    <td>{{$libroU->libros->editorial}}</td>
-                                    <td>{{$libroU->libros->edadf->nombre}}</td>
-                                    <td>{{$libroU->libros->generof->nombre}}</td>
-                                    <td>{{$libroU->libros->categoriaf->nombre}}</td>
-                                    <td>{{$libroU->libros->proveedor}}</td>
-                                    <td>{{$libroU->libros->autor}}</td>
-                                    <td>{{$libroU->libros->isbn}}</td>
+                                    <td>{{$libroU->libro->titulo}}</td>
+                                    <td>{{$libroU->libro->editorial}}</td>
+                                    <td>{{$libroU->libro->edadf->nombre}}</td>
+                                    <td>{{$libroU->libro->generof->nombre}}</td>
+                                    <td>{{$libroU->libro->categoriaf->nombre}}</td>
+                                    <td>{{$libroU->libro->proveedor}}</td>
+                                    <td>{{$libroU->libro->autor}}</td>
+                                    <td>{{$libroU->libro->isbn}}</td>
+                                    <td><button class="btn-danger btn-sm eliminar" value="{{$libroU->id}}">Eliminar</button></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -358,6 +360,9 @@
                 }
 
             });
+            var librosPriorizacion = $('#example').DataTable({
+
+            });
 
             var tableLibrosUsuarios = $('#example3').DataTable({
             })
@@ -528,6 +533,55 @@
                 }
 
                 $('#exampleModalCenter2').modal('show')
+            });
+            librosPriorizacion.on('click', '.eliminar', function (e) {
+                $tr = $(this).closest('tr');
+                let dataTable = librosPriorizacion.row($tr).data();
+                if(dataTable === undefined){
+                    console.log('ingresa');
+                    $row = $tr.prev('tr')
+                    dataTable = librosPriorizacion.row($row).data();
+                }
+                console.log($(this).val(),dataTable)
+                var route = '{{ route('eliminar_libro_priorizacion') }}';
+                var typeAjax = 'POST';
+                var async = async || false;
+                var formDatas = new FormData();
+                formDatas.append('id', $(this).val());
+
+                $.ajax({
+                    url: route,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    cache: false,
+                    type: typeAjax,
+                    contentType: false,
+                    data: formDatas,
+                    processData: false,
+                    async: async,
+                    beforeSend: function () {
+
+                    },
+                    success: function (response, xhr, request) {
+                        console.log(response)
+                        swal({
+                            title: "Buen trabajo!",
+                            text: "Libro eliminado!",
+                            icon: "success",
+                            button: "Ok",
+                        }).then((willDelete) => {
+                            if (willDelete) {
+                                location.reload();
+                            } else {
+                                location.reload();
+                            }
+                        });
+
+                    },
+                    error: function (response, xhr, request) {
+
+                    }
+                });
+
             });
 
             $('#exampleModalCenter2').on('shown.bs.modal', function() {
