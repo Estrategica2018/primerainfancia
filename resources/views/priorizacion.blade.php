@@ -241,53 +241,11 @@
                         dataTable.priorizacion = '<h5><span class="badge badge-danger">Baja</span></h5>'
                         break;
                 }
-                if( evaluarCupos != null){
-                    if( evaluarCupos == 1 ){
-                        objectCuposPriorizacion.find((o, i) => {
-                            if (parseInt(o.edad_lectura_id) ===  parseInt(dataTable.nivel_id)) {
-                                objectCuposPriorizacion[i].cupo--
-                                objectCuposPriorizacion[i].priorizado++
-                                $(`#edadCompletar${o.edad_lectura_id}`).val(objectCuposPriorizacion[i].priorizado);
-                                return true;
-                            }
-                        });
-                        const index = objectLibrosPriorizacion.findIndex(objectLibrosPriorizacion => objectLibrosPriorizacion.id === dataTable.id);
-                        if( index === -1){
-                            objectLibrosPriorizacion.push({
-                                id:dataTable.id,
-                                libro_id:dataTable.libro_id,
-                                priorizacion:priorizacion
-                            })
-                        }else{
-                            objectLibrosPriorizacion[index].priorizacion = priorizacion
-
-                        }
-                        console.log(objectCuposPriorizacion,index,objectLibrosPriorizacion);
-                    }
-                    else{
-                        objectCuposPriorizacion.find((o, i) => {
-                            if (parseInt(o.genero_id) ===  parseInt(dataTable.genero_id)) {
-                                objectCuposPriorizacion[i].cupo--
-                                objectCuposPriorizacion[i].priorizado++
-                                $(`#edadCompletarG${o.genero_id}`).val(objectCuposPriorizacion[i].priorizado);
-                                return true;
-                            }
-                        });
-                        const index = objectLibrosPriorizacion.findIndex(objectLibrosPriorizacion => objectLibrosPriorizacion.id === dataTable.id);
-                        if( index === -1){
-                            objectLibrosPriorizacion.push({
-                                id:dataTable.id,
-                                libro_id:dataTable.libro_id,
-                                priorizacion:priorizacion
-                            })
-                        }else{
-                            objectLibrosPriorizacion[index].priorizacion = priorizacion
-
-                        }
-                        console.log(objectCuposPriorizacion,index,objectLibrosPriorizacion);
-                    }
-
-                }
+                objectLibrosPriorizacion.push({
+                    id:dataTable.id,
+                    libro_id:dataTable.libro_id,
+                    priorizacion:priorizacion
+                })
                 tablePreseleccionComiteLibros.row($row).data(dataTable).draw(false);
                 $('#exampleModalCenter').modal('hide')
             })
@@ -297,6 +255,7 @@
                 var async = async || false;
                 var formDatas = new FormData();
                 formDatas.append('objetolibros', JSON.stringify(objectLibrosPriorizacion));
+                console.log(objectLibrosPriorizacion,'libros')
                 $.ajax({
                     url: route,
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
