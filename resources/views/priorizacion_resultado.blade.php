@@ -111,8 +111,30 @@
     <script>
         $(document).ready(function() {
             var tableResultadoPriorizacion = $('#example2').DataTable({
-                processing: true,
-                serverSide: true,
+                //processing: true,
+                //serverSide: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Exportar a excel',
+                        filename: function(){
+                            return `Resultado logistica de priorización`
+
+                        },
+                        title:function(){
+                            return 'Resultado logistica de priorización'
+                        },
+                        exportOptions: {
+                            //columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
+                            modifier : {
+                                page:'all',
+                                slected: false
+                            }
+                        }
+
+                    }
+                ],
                 'ajax': "{{ route('resultado_libros_logistica_priorizacion_dt')}}",
                 'columns': [
                     {data: 'titulo', "width": "20%"},
@@ -125,24 +147,7 @@
                     {data: 'autor', className: 'text-center'},
                     {data: 'isbn', className: 'text-center'},
                 ],
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        text: 'Exportar a excel',
-                        filename: function(){
-                            return `Resultado logistica de priorización`
 
-                        },
-                        title:function(){
-                            return 'Resultado logistica de priorización'
-                        },
-                        exportOptions: {
-                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-                        }
-
-                    }
-                ],
             });
 
             $('#example1').DataTable({
